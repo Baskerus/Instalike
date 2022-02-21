@@ -9,7 +9,6 @@ function App() {
       <header>
         <Navbar />
       </header>
-
       <Stories />
       <Feed />
       <BottomNav />

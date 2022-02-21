@@ -1,17 +1,34 @@
-import React from 'react'
-import AddStory from './AddStory'
-import Story from './Story'
+import React from "react";
+import AddStory from "./AddStory";
+import Story from "./Story";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { Pagination } from "swiper";
 
 export default function Stories() {
   return (
-    <div className='flex space-x-4 p-4 pt-16 overflow-x-??? border-b'>
-        <AddStory/>
-        <Story seen={true}/>
-        <Story/>
-        <Story/>
-        <Story/>
-        <Story/>
-
+    <div className=" mt-16 px-2 w-full">
+      <Swiper
+        slidesPerView={4}
+        spaceBetween={1}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[Pagination]}
+      >
+        <SwiperSlide className="flex items-center justify-center">
+          <AddStory />
+        </SwiperSlide>
+        <SwiperSlide className="flex items-center justify-center">
+          <Story seen={true} />
+        </SwiperSlide>
+        <SwiperSlide className="flex items-center justify-center">
+          <Story />
+        </SwiperSlide>
+        <SwiperSlide className="flex items-center justify-center">
+          <Story />
+        </SwiperSlide>
+      </Swiper>
     </div>
-  )
+  );
 }
