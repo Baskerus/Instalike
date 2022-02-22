@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Post from "./Post";
-import { faker } from "@faker-js/faker";
 import { db } from "../firebase";
 
 export default function Feed() {

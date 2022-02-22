@@ -9,7 +9,7 @@ import { FiHeart } from "react-icons/fi";
 import { GoThreeBars } from "react-icons/go";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 
-export default function BottomNav() {
+export default function BottomNav({ handleSignOut }) {
   return (
     <div className="fixed w-full bottom-0 pb-4 bg-slate-50 z-10">
       <div className=" flex items-center justify-between p-6 pt-4 text-2xl">
@@ -17,7 +17,10 @@ export default function BottomNav() {
         <FiSearch />
         <MdOutlineVideoLibrary />
         <FiHeart />
-        <div className="IMAGE w-6 h-6 rounded-full bg-slate-300"></div>
+        <div
+          className="IMAGE w-6 h-6 rounded-full bg-slate-300"
+          onClick={handleSignOut}
+        ></div>
       </div>
 
       <div className="flex items-center justify-between px-16 text-lg text-neutral-500">
