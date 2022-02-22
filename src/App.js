@@ -1,17 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BottomNav from "./components/BottomNav";
 import Feed from "./components/Feed";
 import Navbar from "./components/Navbar";
 import Stories from "./components/Stories";
 import SignInModal from "./components/SignInModal";
-import SignUpModal from "./components/SignUpModal";
-import { auth } from "./firebase";
 import firebase from "firebase/compat/app";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  FacebookAuthProvider,
-} from "firebase/auth";
 
 function App() {
   const [signInOpen, setSignInOpen] = useState(true);
@@ -20,6 +13,18 @@ function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+
+  const authProps = {
+    setEmail: setEmail,
+    setPassword: setPassword,
+    setSignUpOpen: setSignUpOpen,
+    setSignInOpen: setSignInOpen,
+    handleSignIn: handleSignIn,
+    handleSignUp: handleSignUp,
+    signInOpen: signInOpen,
+    signUpOpen: signUpOpen,
+    setUsername: setUsername,
+  };
 
   function handleSignIn() {
     firebase
@@ -75,17 +80,7 @@ function App() {
   return (
     <>
       {!signedIn ? (
-        <SignInModal
-          setEmail={setEmail}
-          setPassword={setPassword}
-          setSignUpOpen={setSignUpOpen}
-          setSignInOpen={setSignInOpen}
-          handleSignIn={handleSignIn}
-          handleSignUp={handleSignUp}
-          signInOpen={signInOpen}
-          signUpOpen={signUpOpen}
-          setUsername={setUsername}
-        />
+        <SignInModal authProps={authProps} />
       ) : (
         <div className="App relative flex flex-col w-screen h-screen bg-slate-50 shadow-xl overflow-x-hidden overflow-y-scroll ">
           <Navbar signedIn={signedIn} setSignInOpen={setSignInOpen} />

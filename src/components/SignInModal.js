@@ -1,32 +1,14 @@
 import React from "react";
 import SignUpModal from "./SignUpModal";
 
-export default function SignInModal({
-  setEmail,
-  setPassword,
-  handleSignIn,
-  setSignUpOpen,
-  setSignInOpen,
-  signUpOpen,
-  setUsername,
-  handleSignUp
-}) {
+export default function SignInModal({ authProps }) {
   function handleSignInButton(e) {
     e.preventDefault();
-    handleSignIn();
+    authProps.handleSignIn();
   }
 
-  if (signUpOpen) {
-    return (
-      <SignUpModal
-        setEmail={setEmail}
-        setUsername={setUsername}
-        setPassword={setPassword}
-        handleSignUp={handleSignUp}
-        setSignUpOpen={setSignUpOpen}
-        setSignInOpen={setSignInOpen}
-      />
-    );
+  if (authProps.signUpOpen) {
+    return <SignUpModal authProps={authProps} />;
   } else {
     return (
       <div className="fixed flex flex-col w-screen h-screen items-center justify-center z-10 bg-slate-50 px-5">
@@ -38,7 +20,7 @@ export default function SignInModal({
             type="email"
             placeholder="Email or username"
             onChange={(e) => {
-              setEmail(e.target.value);
+              authProps.setEmail(e.target.value);
             }}
           />
           <input
@@ -47,7 +29,7 @@ export default function SignInModal({
             type="password"
             placeholder="Password"
             onChange={(e) => {
-              setPassword(e.target.value);
+              authProps.setPassword(e.target.value);
             }}
           />
           <a className="flex w-full max-w-sm text-blue-400 font-bold text-xs justify-end">
@@ -63,7 +45,7 @@ export default function SignInModal({
         <div className="absolute flex items-center justify-center bottom-0 w-full h-16 text-sm border-t space-x-1">
           <span className="text-slate-400">Don't have an account?</span>
           <span
-            onClick={() => setSignUpOpen(true)}
+            onClick={() => authProps.setSignUpOpen(true)}
             className="text-blue-500 font-bold"
           >
             Sign Up

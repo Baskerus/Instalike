@@ -2,21 +2,16 @@ import React from "react";
 import { MdClose } from "react-icons/md";
 
 export default function SignUpModal({
-  handleSignUp,
-  setEmail,
-  setUsername,
-  setPassword,
-  setSignUpOpen,
-  setSignInOpen,
+authProps
 }) {
   function handleSubmit(e) {
     e.preventDefault();
-    handleSignUp();
+    authProps.handleSignUp();
   }
 
   function handleBackButton() {
-    setSignUpOpen(false);
-    setSignInOpen(true);
+    authProps.setSignUpOpen(false);
+    authProps.setSignInOpen(true);
   }
 
   return (
@@ -27,7 +22,7 @@ export default function SignUpModal({
       </button> */}
       <MdClose
         onClick={() => {
-          setSignUpOpen(false);
+          authProps.setSignUpOpen(false);
         }}
         className="absolute top-4 right-4 text-3xl cursor-pointer"
       />
@@ -39,7 +34,7 @@ export default function SignUpModal({
           name="email"
           placeholder="Email"
           onChange={(e) => {
-            setEmail(e.target.value);
+            authProps.setEmail(e.target.value);
           }}
         ></input>
         <input
@@ -48,7 +43,7 @@ export default function SignUpModal({
           name="username"
           placeholder="Username"
           onChange={(e) => {
-            setUsername(e.target.value);
+            authProps.setUsername(e.target.value);
           }}
         ></input>
         <input
@@ -57,7 +52,7 @@ export default function SignUpModal({
           name="password"
           placeholder="Password"
           onChange={(e) => {
-            setPassword(e.target.value);
+            authProps.setPassword(e.target.value);
           }}
         ></input>
         <button
