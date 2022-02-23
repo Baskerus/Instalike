@@ -3,22 +3,20 @@ import React, { useState } from "react";
 import { IoMdImages } from "react-icons/io";
 import firebase from "firebase/compat/app";
 import "firebase/storage";
-import { db } from "./firebase";
+import { db } from "../../firebase";
+import { Link } from "react-router-dom";
 
-export default function ImageUpload({ setUploadOpen, username }) {
+export default function ImageUpload({ username }) {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
-  const [progress, setProgress] = useState();
 
   const storage = firebase.storage();
 
   function handleUpload() {
     if (image == null) return;
-
     storage
       .ref(`/images/${image.name}`)
       .put(image)
-
       .then(() => {
         storage
           .ref("/images")
@@ -34,9 +32,7 @@ export default function ImageUpload({ setUploadOpen, username }) {
             });
             console.log("Image uploaded to DB");
           });
-
         console.log("Uploaded successfully");
-        setUploadOpen(false);
       });
   }
 
@@ -56,12 +52,13 @@ export default function ImageUpload({ setUploadOpen, username }) {
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
         <input type="file" onChange={handleChange} />
-        <button
+        <Link
+          to="/feed"
           onClick={handleUpload}
-          className="w-full max-w-[10rem] h-10 bg-blue-500  text-white rounded-md shadow-md"
+          className="flex w-full max-w-[10rem] h-10 items-center justify-center bg-blue-500  text-white rounded-md shadow-md"
         >
           Upload
-        </button>
+        </Link>
       </div>
     </div>
   );

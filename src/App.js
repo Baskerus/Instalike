@@ -1,36 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BottomNav from "./components/ui/BottomNav";
 import Feed from "./components/pages/feed/Feed";
 import Navbar from "./components/ui/Navbar";
 import SignInPage from "./components/pages/SignInPage";
 import firebase from "firebase/compat/app";
-import ImageUpload from "./ImageUpload";
+import ImageUpload from "./components/pages/ImageUpload";
 import UserProfile from "./components/pages/user-profile/UserProfile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignUpPage from "./components/pages/SignUpPage";
+import Loader from "./components/ui/Loader";
 
 function App() {
-  const [signInOpen, setSignInOpen] = useState(true);
-  const [signUpOpen, setSignUpOpen] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const [currentUser, setCurrentUser] = useState();
-  const [uploadOpen, setUploadOpen] = useState(false);
 
   const authProps = {
     setEmail: setEmail,
     setPassword: setPassword,
     setUsername: setUsername,
-    setSignUpOpen: setSignUpOpen,
-    setSignInOpen: setSignInOpen,
     handleSignIn: handleSignIn,
     handleSignUp: handleSignUp,
-    signInOpen: signInOpen,
-    signUpOpen: signUpOpen,
   };
 
   function handleSignIn() {
@@ -40,10 +33,8 @@ function App() {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        // Signed in
         var user = userCredential.user;
-        setCurrentUser(user);
-        setSignInOpen(false);
+        setUsername(user.displayName);
         setSignedIn(true);
         setLoading(false);
         console.log(user.displayName, "signed in...");
@@ -63,7 +54,7 @@ function App() {
   }
 
   function handleSignOut() {
-    console.log(currentUser.displayName, "signed out...");
+    console.log(username, "signed out...");
     firebase
       .auth()
       .signOut()
@@ -84,7 +75,6 @@ function App() {
         var user = userCredential.user;
         console.log("Signed UP with username:", username);
         setSignedIn(true);
-        setSignUpOpen(false);
         return user.updateProfile({
           displayName: username,
         });
@@ -121,23 +111,32 @@ function App() {
             />
           }
         ></Route>
-
         <Route
           exact
-          path="/feed"
+          path="/feed/*"
           element={
             <div className="App relative flex flex-col w-screen h-screen bg-slate-50 shadow-xl overflow-x-hidden ">
-              {uploadOpen && (
-                <ImageUpload
-                  setUploadOpen={setUploadOpen}
-                  username={currentUser.displayName}
-                />
+              {loading ? (
+                <div className="flex w-full h-full items-center justify-center">
+                  <Loader />
+                </div>
+              ) : (
+                <div>
+                  <Navbar username={username} />
+                  <Routes>
+                    <Route exact path="/" element={<Feed />}></Route>
+                    <Route exact path="/user" element={<UserProfile/>}></Route>
+                  </Routes>
+                  <BottomNav handleSignOut={handleSignOut} />
+                </div>
               )}
-              <Navbar signedIn={signedIn} setSignInOpen={setSignInOpen} />
-              <Feed />
-              <BottomNav handleSignOut={handleSignOut} />
             </div>
           }
+        ></Route>
+        <Route
+          exact
+          path="/upload"
+          element={<ImageUpload username={username} />}
         ></Route>
       </Routes>
     </BrowserRouter>

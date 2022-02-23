@@ -20,7 +20,6 @@ export default function Feed() {
 
   return (
     <div className="relative < -z-1 pb-32 mt-14">
-      <center className="mt-64 text-4xl">Feed</center>
 
       {posts.map(({ post, id }) => {
         return (
@@ -31,6 +30,7 @@ export default function Feed() {
             image={post.imageUrl}
             description={post.description}
             likes={post.likes}
+            timestamp={post.timestamp}
           />
         );
       })}

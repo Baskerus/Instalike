@@ -5,6 +5,7 @@ import {
 } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
 import { FiHeart } from "react-icons/fi";
+import {Link} from "react-router-dom"
 
 
 export default function BottomNav({ handleSignOut }) {
@@ -13,12 +14,12 @@ export default function BottomNav({ handleSignOut }) {
       <div className=" flex items-center justify-between px-6 pt-4 text-2xl">
         <MdHomeFilled />
         <FiSearch />
-        {/* <MdOutlineVideoLibrary className="text-transparent"/> */}
         <FiHeart />
-        <div
+        <Link
+        to="/sign-in"
           className="IMAGE w-6 h-6 rounded-full bg-slate-300"
           onClick={handleSignOut}
-        ></div>
+        ></Link>
       </div>
     </div>
   );
