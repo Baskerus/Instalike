@@ -16,10 +16,6 @@ authProps
 
   return (
     <div className="flex flex-col w-screen h-screen items-center justify-center bg-slate-50 p-4">
-      {/*  <button className="flex w-full max-w-sm h-10 justify-center items-center bg-blue-500 text-white rounded-md shadow-md space-x-2">
-        <FaFacebookSquare className="text-2xl" />
-        <span>Log in with Facebook</span>
-      </button> */}
       <MdClose
         onClick={() => {
           authProps.setSignUpOpen(false);

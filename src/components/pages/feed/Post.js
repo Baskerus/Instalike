@@ -20,7 +20,10 @@ export default function Post({ username, avatar, image, description, likes }) {
         <BsThreeDotsVertical className="text-neutral-500" />
       </div>
 
-      <img src={image} className="IMAGE bg-slate-200 h-full object-cover"></img>
+      <img
+        src={image}
+        className="IMAGE bg-slate-200 max-h-[26rem] h-full object-scale-down"
+      ></img>
 
       <div className="flex w-full px-4 py-3 items-center justify-between text-2xl">
         <div className="flex space-x-6">

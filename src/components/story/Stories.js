@@ -7,7 +7,7 @@ import { Pagination } from "swiper";
 
 export default function Stories() {
   return (
-    <div className=" mt-16 px-2 w-full">
+    <div className="relative mt-16 px-2 w-full text-xl font-bold z-9">
       <Swiper
         slidesPerView={4}
         spaceBetween={1}

@@ -1,7 +1,8 @@
 import React from "react";
 import SignUpModal from "./SignUpModal";
+import Loader from "../ui/Loader";
 
-export default function SignInModal({ authProps }) {
+export default function SignInModal({ authProps, loading, errorMsg }) {
   function handleSignInButton(e) {
     e.preventDefault();
     authProps.handleSignIn();
@@ -12,7 +13,13 @@ export default function SignInModal({ authProps }) {
   } else {
     return (
       <div className="fixed flex flex-col w-screen h-screen items-center justify-center z-10 bg-slate-50 px-5">
+        {loading && (
+          <div className="absolute top-[20%]">
+            <Loader />
+          </div>
+        )}
         <h1 className="font-logofont text-5xl mb-4">Instaclone</h1>
+        {errorMsg && <div className="mb-4 text-red-600">{errorMsg}</div>}
         <form className=" flex flex-col w-full items-center justify-center space-y-4 text-sm">
           <input
             className="w-full max-w-sm h-10 border rounded-md px-2 bg-slate-100"
