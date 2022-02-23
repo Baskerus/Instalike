@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import BottomNav from "./components/ui/BottomNav";
 import Feed from "./components/pages/feed/Feed";
 import Navbar from "./components/ui/Navbar";
-import SignInModal from "./components/modals/SignInModal";
+import SignInPage from "./components/pages/SignInPage";
 import firebase from "firebase/compat/app";
 import ImageUpload from "./ImageUpload";
 import UserProfile from "./components/pages/user-profile/UserProfile";
-import {BrowserRouter, Route, Switch} from "react-router-dom"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import SignUpPage from "./components/pages/SignUpPage";
 
 function App() {
   const [signInOpen, setSignInOpen] = useState(true);
@@ -96,22 +97,50 @@ function App() {
   }
 
   return (
-    <div className="relative">
-      {!signedIn ? (
-        <SignInModal
-          authProps={authProps}
-          loading={loading}
-          errorMsg={errorMsg}
-        />
-      ) : (
-        <div className="App relative flex flex-col w-screen h-screen bg-slate-50 shadow-xl overflow-x-hidden ">
-          {uploadOpen && <ImageUpload setUploadOpen={setUploadOpen} username={currentUser.displayName}/>}
-          <Navbar signedIn={signedIn} setSignInOpen={setSignInOpen} />
-          <Feed />
-          <BottomNav handleSignOut={handleSignOut} />
-        </div>
-      )}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          exact
+          path="/sign-in"
+          element={
+            <SignInPage
+              authProps={authProps}
+              loading={loading}
+              errorMsg={errorMsg}
+            />
+          }
+        ></Route>
+        <Route
+          exact
+          path="/sign-up"
+          element={
+            <SignUpPage
+              authProps={authProps}
+              loading={loading}
+              errorMsg={errorMsg}
+            />
+          }
+        ></Route>
+
+        <Route
+          exact
+          path="/feed"
+          element={
+            <div className="App relative flex flex-col w-screen h-screen bg-slate-50 shadow-xl overflow-x-hidden ">
+              {uploadOpen && (
+                <ImageUpload
+                  setUploadOpen={setUploadOpen}
+                  username={currentUser.displayName}
+                />
+              )}
+              <Navbar signedIn={signedIn} setSignInOpen={setSignInOpen} />
+              <Feed />
+              <BottomNav handleSignOut={handleSignOut} />
+            </div>
+          }
+        ></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

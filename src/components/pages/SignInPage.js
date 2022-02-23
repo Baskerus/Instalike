@@ -1,10 +1,10 @@
 import React from "react";
-import SignUpModal from "./SignUpModal";
+import SignUpModal from "./SignUpPage";
 import Loader from "../ui/Loader";
+import { Link } from "react-router-dom";
 
-export default function SignInModal({ authProps, loading, errorMsg }) {
+export default function SignInPage({ authProps, loading, errorMsg }) {
   function handleSignInButton(e) {
-    e.preventDefault();
     authProps.handleSignIn();
   }
 
@@ -42,21 +42,19 @@ export default function SignInModal({ authProps, loading, errorMsg }) {
           <a className="flex w-full max-w-sm text-blue-400 font-bold text-xs justify-end">
             Forgot password?
           </a>
-          <button
-            className="w-full max-w-sm h-10 bg-blue-500 text-white rounded-md shadow-md"
+          <Link
+            to="/feed"
+            className="flex w-full max-w-sm items-center justify-center h-10  bg-blue-500 text-white rounded-md shadow-md"
             onClick={handleSignInButton}
           >
-            Log In
-          </button>
+            Sign in
+          </Link>
         </form>
         <div className="absolute flex items-center justify-center bottom-0 w-full h-16 text-sm border-t space-x-1">
           <span className="text-slate-400">Don't have an account?</span>
-          <span
-            onClick={() => authProps.setSignUpOpen(true)}
-            className="text-blue-500 font-bold"
-          >
+          <Link to="/sign-up" className="text-blue-500 font-bold">
             Sign Up
-          </span>
+          </Link>
           .
         </div>
       </div>

@@ -6,7 +6,6 @@ export default function Feed() {
   const [loading, setLoading] = useState();
 
   useEffect(() => {
-    console.log("Feed mounted...");
     db.collection("posts").onSnapshot((snapshot) => {
       setPosts(
         snapshot.docs.map((doc) => ({
