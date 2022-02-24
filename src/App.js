@@ -8,13 +8,12 @@ import UserProfile from "./components/pages/user-profile/UserProfile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignUpPage from "./components/pages/SignUpPage";
 import { AuthProvider } from "./contexts/AuthContext";
-import firebase from "firebase/compat/app";
+
 
 function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const currentUser = firebase.auth().currentUser;
 
   const authProps = {
     email: email,

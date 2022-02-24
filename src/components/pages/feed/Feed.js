@@ -26,7 +26,7 @@ export default function Feed() {
         }))
       );
     });
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <div className="relative  < -z-1 pb-32 mt-14">

@@ -11,7 +11,7 @@ export default function SignInPage() {
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Prevents already logged in user from entering sign in page
@@ -20,7 +20,7 @@ export default function SignInPage() {
       return;
     }
     return;
-  },[]);
+  },[navigate]);
 
   async function handleSignInButton(e) {
     e.preventDefault();
