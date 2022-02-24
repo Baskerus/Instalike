@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BottomNav from "./components/ui/BottomNav";
 import Feed from "./components/pages/feed/Feed";
 import Navbar from "./components/ui/Navbar";
@@ -18,6 +18,12 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
+  // Temp !
+  /*  const user = firebase.auth().user;
+  useEffect(() => {
+    console.log(signedIn);
+  }, [signedIn]); */
+
   const authProps = {
     setEmail: setEmail,
     setPassword: setPassword,
@@ -29,7 +35,34 @@ function App() {
   function handleSignIn() {
     setErrorMsg(false);
     setLoading(true);
+
     firebase
+      .auth()
+      .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then(() => {
+        return firebase.auth().signInWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            var user = userCredential.user;
+            setUsername(user.displayName);
+            setSignedIn(true);
+            setLoading(false);
+            console.log(user.displayName, "signed in...");
+          })
+          .catch((error) => {
+            setLoading(false);
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if (errorCode === "auth/user-not-found") {
+              setErrorMsg("Incorrect email or password");
+            } else if (errorCode === "auth/invalid-email") {
+              setErrorMsg("Invalid email adress.");
+            } else {
+              alert(errorCode);
+            }
+          });
+      });
+
+    /*   firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
@@ -50,7 +83,7 @@ function App() {
         } else {
           alert(errorCode);
         }
-      });
+      }); */
   }
 
   function handleSignOut() {
@@ -124,8 +157,12 @@ function App() {
                 <div>
                   <Navbar username={username} />
                   <Routes>
-                    <Route exact path="/" element={<Feed />}></Route>
-                    <Route exact path="/user" element={<UserProfile/>}></Route>
+                    <Route
+                      exact
+                      path="/"
+                      element={<Feed username={username} />}
+                    ></Route>
+                    <Route exact path="/user" element={<UserProfile />}></Route>
                   </Routes>
                   <BottomNav handleSignOut={handleSignOut} />
                 </div>

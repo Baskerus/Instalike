@@ -1,5 +1,5 @@
-import { upload } from "@testing-library/user-event/dist/upload";
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { IoMdImages } from "react-icons/io";
 import firebase from "firebase/compat/app";
 import "firebase/storage";
@@ -11,6 +11,11 @@ export default function ImageUpload({ username }) {
   const [image, setImage] = useState(null);
 
   const storage = firebase.storage();
+  const user = firebase.auth().user;
+
+  useEffect(()=>{
+console.log(user)
+  },[])
 
   function handleUpload() {
     if (image == null) return;
@@ -29,6 +34,8 @@ export default function ImageUpload({ username }) {
               description: description,
               imageUrl: url,
               username: username,
+              likes: 0,
+              likedBy: [],
             });
             console.log("Image uploaded to DB");
           });

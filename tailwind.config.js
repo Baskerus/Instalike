@@ -1,13 +1,14 @@
 module.exports = {
- content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      animation: {
+        spins: "ping .23s reverse",
+      },
       fontFamily: {
-      "logofont": ["Grand Hotel"]
-      }
+        logofont: ["Grand Hotel"],
+      },
     },
   },
   plugins: [],
-}
+};
