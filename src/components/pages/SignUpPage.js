@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function SignUpPage({ authProps }) {
-  function handleSubmit(e) {
-    e.preventDefault();
-    authProps.handleSignUp();
+  const { signup, currentUser } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  async function handleSubmit(e) {
+    try {
+      setLoading(true);
+      await signup(email, password, username);
+    } catch {
+      console.log("Failed to create an account");
+    }
+    setLoading(false);
   }
 
   return (
@@ -21,7 +33,7 @@ export default function SignUpPage({ authProps }) {
           name="email"
           placeholder="Email"
           onChange={(e) => {
-            authProps.setEmail(e.target.value);
+            setEmail(e.target.value);
           }}
         ></input>
         <input
@@ -30,7 +42,7 @@ export default function SignUpPage({ authProps }) {
           name="username"
           placeholder="Username"
           onChange={(e) => {
-            authProps.setUsername(e.target.value);
+            setUsername(e.target.value);
           }}
         ></input>
         <input
@@ -39,13 +51,13 @@ export default function SignUpPage({ authProps }) {
           name="password"
           placeholder="Password"
           onChange={(e) => {
-            authProps.setPassword(e.target.value);
+            setPassword(e.target.value);
           }}
         ></input>
         <Link
-          to="/feed"
+          to="/sign-in"
           className="flex w-full max-w-sm h-10 items-center justify-center bg-blue-500 text-white rounded-md shadow-md"
-          onClick={handleSubmit}
+          onClick={!loading && handleSubmit}
         >
           Sign Up
         </Link>

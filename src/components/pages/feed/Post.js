@@ -29,7 +29,9 @@ export default function Post({
     }
 
     // Gets currently logged in user's username
-    setUser(firebase.auth().currentUser.displayName);
+    if (firebase.auth().currentUser) {
+      setUser(firebase.auth().currentUser.displayName);
+    }
 
     // Calculates post age
     if (timestamp) {
