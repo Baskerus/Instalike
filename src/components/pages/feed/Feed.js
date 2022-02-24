@@ -2,20 +2,15 @@ import React, { useState, useEffect } from "react";
 import Post from "./Post";
 import { db } from "../../../firebase";
 import firebase from "firebase/compat/app";
-import { useNavigate } from "react-router-dom";
 
 export default function Feed() {
-  const [loading, setLoading] = useState();
   const [posts, setPosts] = useState([]);
   let user = firebase.auth().currentUser;
-  let navigate = useNavigate();
 
   useEffect(() => {
     // Returns to sign in page if the user is not signed in
-
     if (!user) {
       console.log("no user");
-      navigate("/sign-in");
     }
 
     db.collection("posts").onSnapshot((snapshot) => {

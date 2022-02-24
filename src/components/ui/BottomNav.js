@@ -1,16 +1,11 @@
 import React from "react";
-import {
-  MdHomeFilled,
-  MdOutlineVideoLibrary,
-} from "react-icons/md";
+import { MdHomeFilled } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
 import { FiHeart } from "react-icons/fi";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
-
 export default function BottomNav() {
-
   const { logout } = useAuth();
 
   return (
@@ -20,7 +15,7 @@ export default function BottomNav() {
         <FiSearch />
         <FiHeart />
         <Link
-        to="/sign-in"
+          to="/sign-in"
           className="IMAGE w-6 h-6 rounded-full bg-slate-300"
           onClick={logout}
         ></Link>

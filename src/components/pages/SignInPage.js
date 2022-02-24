@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
-import SignUpModal from "./SignUpPage";
+import React, { useState } from "react";
 import Loader from "../ui/Loader";
-import { Link, useHref } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import firebase from "firebase/compat/app";
 import { useNavigate } from "react-router-dom";
 
 export default function SignInPage() {
-  const { login, currentUser } = useAuth();
+  const { login } = useAuth();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
@@ -25,7 +24,7 @@ export default function SignInPage() {
       setErrorMsg("Incorrect username or password.");
     }
     if (firebase.auth().currentUser) {
-      console.log(firebase.auth().currentUser.displayName, " logged in.");
+      console.log(firebase.auth().currentUser.displayName, "logged in.");
       setLoading(false);
       navigate("/feed");
     }
@@ -61,9 +60,9 @@ export default function SignInPage() {
               setPassword(e.target.value);
             }}
           />
-          <a className="flex w-full max-w-sm text-blue-400 font-bold text-xs justify-end">
+          <div className="flex w-full max-w-sm text-blue-400 font-bold text-xs justify-end">
             Forgot password?
-          </a>
+          </div>
           <button
             to="/feed"
             className="flex w-full max-w-sm items-center justify-center h-10  bg-blue-500 text-white rounded-md shadow-md"

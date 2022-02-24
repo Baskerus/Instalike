@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { IoMdImages } from "react-icons/io";
 import firebase from "firebase/compat/app";
@@ -11,11 +10,11 @@ export default function ImageUpload({ username }) {
   const [image, setImage] = useState(null);
 
   const storage = firebase.storage();
-  const user = firebase.auth().user;
+  const user = firebase.auth().currentUser;
 
-  useEffect(()=>{
-console.log(user)
-  },[])
+  useEffect(() => {
+    console.log(user.displayName);
+  }, [user]);
 
   function handleUpload() {
     if (image == null) return;
@@ -33,7 +32,7 @@ console.log(user)
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               description: description,
               imageUrl: url,
-              username: username,
+              username: user.displayName,
               likes: 0,
               likedBy: [],
             });

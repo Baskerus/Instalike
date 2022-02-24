@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
 export default function SignUpPage({ authProps }) {
-  const { signup, currentUser } = useAuth();
+  const { signup } = useAuth();
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();

@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
 import { auth } from "../firebase";
-import { resolvePath } from "react-router-dom";
 
 const AuthContext = React.createContext();
 
@@ -30,7 +29,7 @@ export function AuthProvider({ children }) {
   }
 
   function logout() {
-    console.log(firebase.auth().currentUser.displayName, "signed out...");
+    console.log(firebase.auth().currentUser.displayName, "logged out...");
     firebase
       .auth()
       .signOut()

@@ -1,14 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BottomNav from "./components/ui/BottomNav";
 import Feed from "./components/pages/feed/Feed";
 import Navbar from "./components/ui/Navbar";
 import SignInPage from "./components/pages/SignInPage";
-import firebase from "firebase/compat/app";
 import ImageUpload from "./components/pages/ImageUpload";
 import UserProfile from "./components/pages/user-profile/UserProfile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignUpPage from "./components/pages/SignUpPage";
-import Loader from "./components/ui/Loader";
 import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
@@ -28,11 +26,7 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route
-            exact
-            path="/sign-in"
-            element={<SignInPage />}
-          ></Route>
+          <Route exact path="/sign-in" element={<SignInPage />}></Route>
           <Route
             exact
             path="/sign-up"

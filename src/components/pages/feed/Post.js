@@ -17,7 +17,6 @@ export default function Post({
   likedBy,
 }) {
   const [postTime, setPostTime] = useState("");
-  const db = firebase.firestore();
   const [postLikes, setPostLikes] = useState(likes);
   const [user, setUser] = useState(username);
   const [postLiked, setPostLiked] = useState(false);
@@ -26,6 +25,8 @@ export default function Post({
     // Checks if user has already liked the post
     if (likedBy.includes(user)) {
       setPostLiked(true);
+    } else {
+      setPostLiked(false);
     }
 
     // Gets currently logged in user's username
@@ -42,13 +43,13 @@ export default function Post({
 
       let h = Math.floor(dateDiff / 3600);
       let m = Math.floor((dateDiff % 3600) / 60);
-      let s = Math.floor((dateDiff % 3600) % 60);
+      /*       let s = Math.floor((dateDiff % 3600) % 60); */
 
-      let hDisplay = h > 0 ? h + (h == 1 ? " hour " : " hours ") : "";
-      let mDisplay = m > 0 ? m + (m == 1 ? " minute " : " minutes ") : "";
+      let hDisplay = h > 0 ? h + (h === 1 ? " hour " : " hours ") : "";
+      let mDisplay = m > 0 ? m + (m === 1 ? " minute " : " minutes ") : "";
       // Decided not to use seconds ---- let sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
 
-      // Displays the time since post was uploaded ("4 minutes ago, 18 hours ago, 5 day ago, etc...")
+      // Displays the time since post was uploaded
       if (dateDiff < 3600) {
         setPostTime(mDisplay + " ago");
       } else if (h < 24) {
@@ -65,10 +66,11 @@ export default function Post({
         setPostTime(timestamp.toDate().toLocaleDateString("en-GB", options));
       }
     } else return;
-  }, []);
+    //    v fixed the error?
+    return;
+  }, [user, likedBy, timestamp]);
 
   function handleLike() {
-    // Adds likes but does not stop adding :DD
     let db = firebase.firestore();
 
     if (likedBy.includes(user)) {
@@ -95,6 +97,7 @@ export default function Post({
           <img
             src={avatar}
             className="IMAGE rounded-full bg-slate-300 w-7 h-7"
+            alt="user avatar"
           />
           <a href="/" className="font-bold lowercase">
             {username}
@@ -104,6 +107,7 @@ export default function Post({
       </div>
 
       <img
+        alt=""
         src={image}
         className="bg-slate-200 max-h-[26rem] h-full object-scale-down select-none"
       ></img>
@@ -111,10 +115,7 @@ export default function Post({
       <div className="flex w-full px-4 py-3 items-center justify-between text-2xl">
         <div className="flex space-x-6">
           {postLiked ? (
-            <FaHeart
-              className="text-red-600 motion-safe:animate-spins"
-              onClick={handleLike}
-            />
+            <FaHeart className="text-red-600" onClick={handleLike} />
           ) : (
             <FiHeart onClick={handleLike} />
           )}
