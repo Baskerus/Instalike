@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Loader from "../ui/Loader";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -12,6 +12,15 @@ export default function SignInPage() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
   let navigate = useNavigate();
+
+  useEffect(() => {
+    // Prevents already logged in user from entering sign in page
+    if (firebase.auth().currentUser) {
+      navigate("/feed");
+      return;
+    }
+    return;
+  },[]);
 
   async function handleSignInButton(e) {
     e.preventDefault();

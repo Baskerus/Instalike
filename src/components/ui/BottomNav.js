@@ -2,7 +2,7 @@ import React from "react";
 import { MdHomeFilled } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
 import { FiHeart } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
 export default function BottomNav() {

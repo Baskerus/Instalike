@@ -51,7 +51,9 @@ export default function Post({
 
       // Displays the time since post was uploaded
       if (dateDiff < 3600) {
-        setPostTime(mDisplay + " ago");
+        if (mDisplay < 1) {
+          setPostTime("Just a moment ago.");
+        } else setPostTime(mDisplay + " ago");
       } else if (h < 24) {
         setPostTime(hDisplay + " ago");
       } else if (h <= 720) {
@@ -115,9 +117,12 @@ export default function Post({
       <div className="flex w-full px-4 py-3 items-center justify-between text-2xl">
         <div className="flex space-x-6">
           {postLiked ? (
-            <FaHeart className="text-red-600" onClick={handleLike} />
+            <FaHeart
+              className="text-red-600 cursor-pointer"
+              onClick={handleLike}
+            />
           ) : (
-            <FiHeart onClick={handleLike} />
+            <FiHeart className="cursor-pointer" onClick={handleLike} />
           )}
           <IoPaperPlaneOutline />
         </div>
