@@ -29,7 +29,7 @@ export default function Feed() {
   }, [user, navigate]);
 
   return (
-    <div className="FEED relative w-full max-w-2xl  pb-32 mt-14 space-y-6 md:space-y-10 lg:space-y-16 overflow-hidden">
+    <div className="FEED w-full max-w-2xl pb-32 mt-14 space-y-6 md:space-y-10 lg:space-y-16 overflow-hidden">
       {user &&
         posts.map(({ post, id }) => {
           return (
@@ -43,6 +43,7 @@ export default function Feed() {
               likes={post.likes}
               timestamp={post.timestamp}
               likedBy={post.likedBy}
+              comments={post.comments}
             />
           );
         })}

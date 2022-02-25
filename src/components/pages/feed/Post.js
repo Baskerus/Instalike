@@ -5,6 +5,7 @@ import { FaHeart } from "react-icons/fa";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import { BiBookmark } from "react-icons/bi";
 import firebase from "firebase/compat/app";
+import { db } from "../../../firebase";
 
 export default function Post({
   username,
@@ -16,10 +17,33 @@ export default function Post({
   id,
   likedBy,
 }) {
+  const currentUser = firebase.auth().currentUser.displayName;
+
   const [postTime, setPostTime] = useState("");
   const [postLikes, setPostLikes] = useState(likes);
   const [user, setUser] = useState(username);
   const [postLiked, setPostLiked] = useState(false);
+  const [commentContent, setCommentContent] = useState("");
+  const [commentsArray, setCommentsArray] = useState([]);
+  const [commentsLoaded, setCommentsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Gets data from the "comment" collection inside "posts"
+    // and stores them in commentsArray                                                  REVISIT THIS !!!!!!!!!!!!
+    if (commentsLoaded) {
+      return;
+    }
+    db.collection("posts")
+      .doc(id)
+      .collection("comments")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          setCommentsArray((commentsArray) => [...commentsArray, doc.data()]);
+          setCommentsLoaded(true);
+        });
+      });
+  }, []);
 
   useEffect(() => {
     // Checks if user has already liked the post
@@ -72,6 +96,15 @@ export default function Post({
     return;
   }, [user, likedBy, timestamp]);
 
+  function handlePostComment() {
+    if (currentUser && commentContent) {
+      db.collection("posts")
+        .doc(id)
+        .collection("comments")
+        .add({ user: currentUser, content: commentContent });
+    }
+  }
+
   function handleLike() {
     let db = firebase.firestore();
 
@@ -93,7 +126,7 @@ export default function Post({
   }
 
   return (
-    <div className="flex flex-col w-full text-sm my-6 pb-8 border rounded-md">
+    <div className="flex relative  flex-col w-full text-sm pb-16 my-6 border bg-slate-50 shadow-md shadow-slate-100 rounded-md overflow-hidden">
       <div className="flex w-full justify-between items-center p-4 lg:p-6">
         <div className="flex items-center justify-center space-x-2">
           <img
@@ -110,7 +143,7 @@ export default function Post({
       <img
         alt=""
         src={image}
-        className="max-h-[26rem] lg:max-h-[34rem] h-full object-scale-down select-none  rounded-md"
+        className="max-h-[26rem] lg:max-h-[32rem] h-full object-scale-down select-none bg-slate-100 rounded-md"
       ></img>
       <div className="flex w-full px-4 py-3 items-center justify-between text-2xl lg:px-6">
         <div className="flex space-x-6">
@@ -136,9 +169,56 @@ export default function Post({
           <a href="/" className="lowercase font-bold mr-1">
             {username}
           </a>
-          <div className="break-word">{description} </div>
+          <div className="break-word max-w-[40ch] md:max-w-[75ch] mb-1">
+            {description}
+          </div>
         </div>
-        <div className="text-xs text-neutral-400 pt-1">{postTime}</div>
+        <div className="COMM_CONTAINER">
+          {commentsArray &&
+            commentsArray.map((comment, index) => {
+              return (
+                <div key={index} className="COMMENT flex">
+                  <a href="/" className="lowercase font-bold mr-1">
+                    {comment.user}
+                  </a>
+                  <div className="break-word">{comment.content}</div>
+                </div>
+              );
+            })}
+        </div>
+        {/*   <div className="COMMENT flex">
+          <a href="/" className="lowercase font-bold mr-1">
+            {username}
+          </a>
+          <div className="break-word">
+            Placeholder comment Lorem, ipsum dolor sit amet consectetur
+            adipisicing elit. Sit, eligendi.
+          </div>
+        </div> */}
+        <div className="text-xs text-neutral-400">{postTime}</div>
+        <div className="ADD A COMMENT flex absolute bottom-0 left-0 w-full ">
+          <textarea
+            onChange={(e) => setCommentContent(e.target.value)}
+            placeholder="Add a comment..."
+            className="text-sm w-full border-t h-12 py-3 px-3 resize-none focus:outline-slate-300 placeholder:text-slate-300"
+          ></textarea>
+
+          {commentContent ? (
+            <button
+              onClick={handlePostComment}
+              className={`flex items-center justify-center text-sky-400 text-sm p-3 px-5 border-x border-t bg-neutral-50 cursor-pointer`}
+            >
+              Post
+            </button>
+          ) : (
+            <button
+              disabled
+              className={`flex items-center justify-center text-sky-200 text-sm p-3 px-5 border-x border-t bg-neutral-50`}
+            >
+              Post
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -25,33 +25,35 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Routes>
-          <Route exact path="/" element={<SignInPage />}></Route>
-          <Route
-            exact
-            path="/sign-up"
-            element={<SignUpPage authProps={authProps} />}
-          ></Route>
-          <Route
-            exact
-            path="/feed/*"
-            element={
-              <div className="flex relative items-center w-screen h-full justify-center bg-slate-50">
-                <Navbar username={username} />
-                <Routes>
-                  <Route exact path="/" element={<Feed />}></Route>
-                  <Route exact path="/user" element={<UserProfile />}></Route>
-                </Routes>
-                <BottomNav />
-              </div>
-            }
-          ></Route>
-          <Route
-            exact
-            path="/upload"
-            element={<ImageUpload username={username} />}
-          ></Route>
-        </Routes>
+        <div className="bg-slate-100 text-slate-800">
+          <Routes>
+            <Route exact path="/" element={<SignInPage />}></Route>
+            <Route
+              exact
+              path="/sign-up"
+              element={<SignUpPage authProps={authProps} />}
+            ></Route>
+            <Route
+              exact
+              path="/feed/*"
+              element={
+                <div className="flex relative items-center w-screen h-full justify-center">
+                  <Navbar username={username} />
+                  <Routes>
+                    <Route exact path="/" element={<Feed />}></Route>
+                    <Route exact path="/user" element={<UserProfile />}></Route>
+                  </Routes>
+                  <BottomNav />
+                </div>
+              }
+            ></Route>
+            <Route
+              exact
+              path="/upload"
+              element={<ImageUpload username={username} />}
+            ></Route>
+          </Routes>
+        </div>
       </AuthProvider>
     </BrowserRouter>
   );

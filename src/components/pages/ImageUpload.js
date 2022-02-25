@@ -35,6 +35,7 @@ export default function ImageUpload() {
               username: user.displayName,
               likes: 0,
               likedBy: [],
+              comments: [],
             });
             console.log("Image uploaded to DB");
           });
@@ -59,8 +60,8 @@ export default function ImageUpload() {
         </div>
         <IoMdImages className="text-[100px] text-slate-300 " />
         <textarea
-          className="h-16 max-w-md w-[80%] p-3 text-sm resize-none"
-          maxLength={40}
+          className="h-16 max-w-md w-[80%] p-3 text-sm resize-none focus:outline-slate-300"
+          maxLength={60}
           placeholder="Enter image caption..."
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
