@@ -9,7 +9,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignUpPage from "./components/pages/SignUpPage";
 import { AuthProvider } from "./contexts/AuthContext";
 
-
 function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +26,7 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route exact path="/sign-in" element={<SignInPage />}></Route>
+          <Route exact path="/" element={<SignInPage />}></Route>
           <Route
             exact
             path="/sign-up"
@@ -37,15 +36,13 @@ function App() {
             exact
             path="/feed/*"
             element={
-              <div className="App relative flex flex-col w-screen h-screen bg-slate-50 shadow-xl overflow-x-hidden ">
-                <div>
-                  <Navbar username={username} />
-                  <Routes>
-                    <Route exact path="/" element={<Feed />}></Route>
-                    <Route exact path="/user" element={<UserProfile />}></Route>
-                  </Routes>
-                  <BottomNav />
-                </div>
+              <div className="flex relative items-center w-screen h-full justify-center bg-slate-50">
+                <Navbar username={username} />
+                <Routes>
+                  <Route exact path="/" element={<Feed />}></Route>
+                  <Route exact path="/user" element={<UserProfile />}></Route>
+                </Routes>
+                <BottomNav />
               </div>
             }
           ></Route>

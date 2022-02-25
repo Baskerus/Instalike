@@ -13,7 +13,7 @@ export default function Feed() {
     // Returns to sign in page if the user is not signed in
     if (!user) {
       console.log("No user was detected - returning to sign in...");
-      navigate("/sign-in");
+      navigate("/", { replace: true });
       // v fixes "Can't perform a React state update on an unmounted component."
       return;
     }
@@ -29,7 +29,7 @@ export default function Feed() {
   }, [user, navigate]);
 
   return (
-    <div className="relative  < -z-1 pb-32 mt-14">
+    <div className="FEED relative w-full max-w-2xl  pb-32 mt-14 space-y-6 md:space-y-10 lg:space-y-16 overflow-hidden">
       {user &&
         posts.map(({ post, id }) => {
           return (

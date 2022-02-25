@@ -32,11 +32,10 @@ export function AuthProvider({ children }) {
 
   function logout() {
     console.log(firebase.auth().currentUser.displayName, "logged out...");
-    navigate("/sign-in");
+    navigate("/", { replace: true });
     firebase
       .auth()
       .signOut()
-      .then(() => {})
       .catch((error) => {
         // An error happened.
       });

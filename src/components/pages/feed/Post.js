@@ -93,13 +93,13 @@ export default function Post({
   }
 
   return (
-    <div className="flex flex-col text-sm mt-2">
-      <div className="flex w-full justify-between items-center p-4">
+    <div className="flex flex-col w-full text-sm my-6 pb-8 border rounded-md">
+      <div className="flex w-full justify-between items-center p-4 lg:p-6">
         <div className="flex items-center justify-center space-x-2">
           <img
             src={avatar}
             className="IMAGE rounded-full bg-slate-300 w-7 h-7"
-            alt="user avatar"
+            /*   alt="user avatar" */
           />
           <a href="/" className="font-bold lowercase">
             {username}
@@ -107,14 +107,12 @@ export default function Post({
         </div>
         <BsThreeDotsVertical className="text-neutral-500" />
       </div>
-
       <img
         alt=""
         src={image}
-        className="bg-slate-200 max-h-[26rem] h-full object-scale-down select-none"
+        className="max-h-[26rem] lg:max-h-[34rem] h-full object-scale-down select-none  rounded-md"
       ></img>
-
-      <div className="flex w-full px-4 py-3 items-center justify-between text-2xl">
+      <div className="flex w-full px-4 py-3 items-center justify-between text-2xl lg:px-6">
         <div className="flex space-x-6">
           {postLiked ? (
             <FaHeart
@@ -129,16 +127,16 @@ export default function Post({
         <BiBookmark />
       </div>
 
-      <div className="flex flex-col px-4 select-none">
+      <div className="flex flex-col px-4 lg:px-6 select-none">
         <div className="font-bold">
           {postLikes !== 0 ? postLikes : "No"}{" "}
           {postLikes === 1 ? "like" : "likes"}
         </div>
-        <div>
+        <div className="flex">
           <a href="/" className="lowercase font-bold mr-1">
             {username}
           </a>
-          {description}
+          <div className="break-word">{description} </div>
         </div>
         <div className="text-xs text-neutral-400 pt-1">{postTime}</div>
       </div>

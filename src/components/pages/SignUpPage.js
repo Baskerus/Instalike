@@ -3,7 +3,7 @@ import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
-export default function SignUpPage({ authProps }) {
+export default function SignUpPage() {
   const { signup } = useAuth();
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState();
@@ -22,7 +22,7 @@ export default function SignUpPage({ authProps }) {
 
   return (
     <div className="flex flex-col w-screen h-screen items-center justify-center bg-slate-50 p-4">
-      <Link to="/sign-in">
+      <Link to="/">
         <MdClose className="absolute top-4 right-4 text-3xl cursor-pointer" />
       </Link>
       <h1 className="font-logofont text-5xl mb-12">Instaclone</h1>
@@ -55,7 +55,7 @@ export default function SignUpPage({ authProps }) {
           }}
         ></input>
         <Link
-          to="/sign-in"
+          to="/"
           className="flex w-full max-w-sm h-10 items-center justify-center bg-blue-500 text-white rounded-md shadow-md"
           onClick={!loading && handleSubmit}
         >
@@ -64,7 +64,7 @@ export default function SignUpPage({ authProps }) {
       </form>
       <div className="absolute flex items-center justify-center bottom-0 w-full h-16 text-sm border-t space-x-1">
         <span className="text-slate-400">Already have an account?</span>
-        <Link to="/sign-in" className="text-blue-500 font-bold">
+        <Link to="/" className="text-blue-500 font-bold">
           Sign In
         </Link>
       </div>

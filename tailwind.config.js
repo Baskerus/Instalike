@@ -3,7 +3,7 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        spins: "ping .23s reverse",
+        ping: "ping .23s linear",
       },
       fontFamily: {
         logofont: ["Grand Hotel"],
