@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
@@ -26,6 +26,8 @@ export default function Post({
   const [commentContent, setCommentContent] = useState("");
   const [commentsArray, setCommentsArray] = useState([]);
   const [commentsLoaded, setCommentsLoaded] = useState(false);
+  const [addedComment, setAddedComment] = useState();
+  const textarea = useRef();
 
   useEffect(() => {
     // Gets data from the "comment" collection inside "posts"
@@ -43,6 +45,7 @@ export default function Post({
           setCommentsLoaded(true);
         });
       });
+    setAddedComment("");
   }, []);
 
   useEffect(() => {
@@ -97,12 +100,16 @@ export default function Post({
   }, [user, likedBy, timestamp]);
 
   function handlePostComment() {
+    textarea.current.value = "";
+
     if (currentUser && commentContent) {
       db.collection("posts")
         .doc(id)
         .collection("comments")
         .add({ user: currentUser, content: commentContent });
     }
+
+    setAddedComment(commentContent);
   }
 
   function handleLike() {
@@ -185,19 +192,20 @@ export default function Post({
                 </div>
               );
             })}
+          {addedComment && (
+            <div className="COMMENT flex">
+              <a href="/" className="lowercase font-bold mr-1">
+                {user}
+              </a>
+              <div className="break-word">{addedComment}</div>
+            </div>
+          )}
         </div>
-        {/*   <div className="COMMENT flex">
-          <a href="/" className="lowercase font-bold mr-1">
-            {username}
-          </a>
-          <div className="break-word">
-            Placeholder comment Lorem, ipsum dolor sit amet consectetur
-            adipisicing elit. Sit, eligendi.
-          </div>
-        </div> */}
+
         <div className="text-xs text-neutral-400">{postTime}</div>
         <div className="ADD A COMMENT flex absolute bottom-0 left-0 w-full ">
           <textarea
+            ref={textarea}
             onChange={(e) => setCommentContent(e.target.value)}
             placeholder="Add a comment..."
             className="text-sm w-full border-t h-12 py-3 px-3 resize-none focus:outline-slate-300 placeholder:text-slate-300"
