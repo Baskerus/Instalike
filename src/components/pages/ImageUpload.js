@@ -49,27 +49,27 @@ export default function ImageUpload() {
     }
   };
   return (
-    <div className="fixed flex flex-col w-full h-full top-0 p-4 items-center justify-center bg-slate-300">
+    <div className="fixed top-0 flex flex-col items-center justify-center w-full h-full p-4 bg-slate-300">
       <div className="flex flex-col relative min-w-[240px] max-w-lg w-full h-[470px] items-center justify-center bg-slate-50 rounded-xl space-y-6  shadow-xl">
         <MdClose
           onClick={() => navigate("/feed")}
-          className="absolute top-0 right-0 w-10 h-10 p-2 m-2 text-slate-500 cursor-pointer"
+          className="absolute top-0 right-0 w-10 h-10 p-2 m-2 cursor-pointer text-slate-500"
         />
-        <div className="text-sm text-center px-4 pb-4 text-slate-500 border-b">
+        <div className="px-4 pb-4 text-sm text-center border-b text-slate-500">
           Select an image, add a caption and upload
         </div>
         <IoMdImages className="text-[100px] text-slate-300 " />
         <textarea
           className="h-16 max-w-md w-[80%] p-3 text-sm resize-none focus:outline-slate-300"
-          maxLength={60}
+          maxLength={80}
           placeholder="Enter image caption..."
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
         {!image && (
-          <label className="flex items-center justify-center w-8/12 h-10 bg-blue-500 text-white text-sm rounded-md shadow-md cursor-pointer">
+          <label className="flex items-center justify-center w-8/12 h-10 text-sm text-white bg-blue-500 rounded-md shadow-md cursor-pointer">
             Select and image
             <input
-              className="border  hidden"
+              className="hidden border"
               type="file"
               onChange={handleChange}
             />
@@ -77,15 +77,15 @@ export default function ImageUpload() {
         )}
 
         {image && (
-          <div className="flex flex-col w-full items-center justify-center space-y-2">
-            <span className="flex w-full justify-center items-center truncate px-12 sm:px-32 text-slate-500">
+          <div className="flex flex-col items-center justify-center w-full space-y-2">
+            <span className="flex items-center justify-center w-full px-12 truncate sm:px-32 text-slate-500">
               {image.name}
             </span>
-            <div className="flex w-full justify-center items-center">
-              <label className="flex w-16 h-10 mt-1 py-1 text-slate-400">
+            <div className="flex items-center justify-center w-full">
+              <label className="flex w-16 h-10 py-1 mt-1 text-slate-400">
                 <GrRotateLeft className="w-full h-full cursor-pointer"></GrRotateLeft>
                 <input
-                  className="border  hidden"
+                  className="hidden border"
                   type="file"
                   onChange={handleChange}
                 />

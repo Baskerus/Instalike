@@ -27,39 +27,12 @@ export default function Post({
   const [commentsArray, setCommentsArray] = useState([]);
   const [commentsLoaded, setCommentsLoaded] = useState(false);
   const [addedComment, setAddedComment] = useState();
+  const [time, setTime] = useState(Date.now());
   const textarea = useRef();
 
+  // Fix this with a component?
   useEffect(() => {
-    // Gets data from the "comment" collection inside "posts"
-    // and stores them in commentsArray                                                  REVISIT THIS !!!!!!!!!!!!
-    if (commentsLoaded) {
-      return;
-    }
-    db.collection("posts")
-      .doc(id)
-      .collection("comments")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          setCommentsArray((commentsArray) => [...commentsArray, doc.data()]);
-          setCommentsLoaded(true);
-        });
-      });
-    setAddedComment("");
-  }, []);
-
-  useEffect(() => {
-    // Checks if user has already liked the post
-    if (likedBy.includes(user)) {
-      setPostLiked(true);
-    } else {
-      setPostLiked(false);
-    }
-
-    // Gets currently logged in user's username
-    if (firebase.auth().currentUser) {
-      setUser(firebase.auth().currentUser.displayName);
-    }
+    const interval = setInterval(() => setTime(Date.now()), 1000);
 
     // Calculates post age
     if (timestamp) {
@@ -94,7 +67,44 @@ export default function Post({
         };
         setPostTime(timestamp.toDate().toLocaleDateString("en-GB", options));
       }
-    } else return;
+    } else
+      return () => {
+        clearInterval(interval);
+      };
+  }, [time]);
+
+  useEffect(() => {
+    // Gets data from the "comment" collection inside "posts"
+    // and stores them in commentsArray                                                  REVISIT THIS !!!!!!!!!!!!
+
+    if (commentsLoaded) {
+      return;
+    }
+    db.collection("posts")
+      .doc(id)
+      .collection("comments")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          setCommentsArray((commentsArray) => [...commentsArray, doc.data()]);
+          setCommentsLoaded(true);
+        });
+      });
+    setAddedComment("");
+  }, []);
+
+  useEffect(() => {
+    // Checks if user has already liked the post
+    if (likedBy.includes(user)) {
+      setPostLiked(true);
+    } else {
+      setPostLiked(false);
+    }
+
+    // Gets currently logged in user's username
+    if (firebase.auth().currentUser) {
+      setUser(firebase.auth().currentUser.displayName);
+    }
     //    v fixed the error?
     return;
   }, [user, likedBy, timestamp]);
@@ -133,12 +143,12 @@ export default function Post({
   }
 
   return (
-    <div className="flex relative  flex-col w-full text-sm pb-16 my-6 border bg-slate-50 shadow-md shadow-slate-100 rounded-md overflow-hidden">
-      <div className="flex w-full justify-between items-center p-4 lg:p-6">
+    <div className="relative flex flex-col w-full pb-16 my-6 overflow-hidden text-sm border rounded-md shadow-md bg-slate-50 shadow-slate-100">
+      <div className="flex items-center justify-between w-full p-4 lg:p-6">
         <div className="flex items-center justify-center space-x-2">
           <img
             src={avatar}
-            className="IMAGE rounded-full bg-slate-300 w-7 h-7"
+            className="rounded-full IMAGE bg-slate-300 w-7 h-7"
             /*   alt="user avatar" */
           />
           <a href="/" className="font-bold lowercase">
@@ -152,7 +162,7 @@ export default function Post({
         src={image}
         className="max-h-[26rem] lg:max-h-[32rem] h-full object-scale-down select-none bg-slate-100 rounded-md"
       ></img>
-      <div className="flex w-full px-4 py-3 items-center justify-between text-2xl lg:px-6">
+      <div className="flex items-center justify-between w-full px-4 py-3 text-2xl lg:px-6">
         <div className="flex space-x-6">
           {postLiked ? (
             <FaHeart
@@ -167,13 +177,13 @@ export default function Post({
         <BiBookmark />
       </div>
 
-      <div className="flex flex-col px-4 lg:px-6 select-none">
+      <div className="flex flex-col px-4 select-none lg:px-6">
         <div className="font-bold">
           {postLikes !== 0 ? postLikes : "No"}{" "}
           {postLikes === 1 ? "like" : "likes"}
         </div>
         <div className="flex">
-          <a href="/" className="lowercase font-bold mr-1">
+          <a href="/" className="mr-1 font-bold lowercase">
             {username}
           </a>
           <div className="break-word max-w-[40ch] md:max-w-[75ch] mb-1">
@@ -184,8 +194,8 @@ export default function Post({
           {commentsArray &&
             commentsArray.map((comment, index) => {
               return (
-                <div key={index} className="COMMENT flex">
-                  <a href="/" className="lowercase font-bold mr-1">
+                <div key={index} className="flex COMMENT">
+                  <a href="/" className="mr-1 font-bold lowercase">
                     {comment.user}
                   </a>
                   <div className="break-word">{comment.content}</div>
@@ -193,8 +203,8 @@ export default function Post({
               );
             })}
           {addedComment && (
-            <div className="COMMENT flex">
-              <a href="/" className="lowercase font-bold mr-1">
+            <div className="flex COMMENT">
+              <a href="/" className="mr-1 font-bold lowercase">
                 {user}
               </a>
               <div className="break-word">{addedComment}</div>
@@ -203,12 +213,12 @@ export default function Post({
         </div>
 
         <div className="text-xs text-neutral-400">{postTime}</div>
-        <div className="ADD A COMMENT flex absolute bottom-0 left-0 w-full ">
+        <div className="absolute bottom-0 left-0 flex w-full ADD A COMMENT ">
           <textarea
             ref={textarea}
             onChange={(e) => setCommentContent(e.target.value)}
             placeholder="Add a comment..."
-            className="text-sm w-full border-t h-12 py-3 px-3 resize-none focus:outline-slate-300 placeholder:text-slate-300"
+            className="w-full h-12 px-3 py-3 text-sm border-t resize-none focus:outline-slate-300 placeholder:text-slate-300"
           ></textarea>
 
           {commentContent ? (

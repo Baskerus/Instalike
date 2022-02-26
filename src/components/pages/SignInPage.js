@@ -11,6 +11,7 @@ export default function SignInPage() {
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [pending, setPending] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,7 +21,7 @@ export default function SignInPage() {
       return;
     }
     return;
-  },[navigate]);
+  }, [navigate]);
 
   async function handleSignInButton(e) {
     e.preventDefault();
@@ -40,54 +41,54 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="fixed flex flex-col w-screen h-screen items-center justify-center z-10 bg-slate-50 px-5">
-      <h1 className="font-logofont text-5xl mb-4 transition-all duration-300">
-        Instaclone
-      </h1>
-      {errorMsg && <div className="mb-4 text-red-600">{errorMsg}</div>}
-      {loading ? (
-        <div className="">
-          <Loader />
-        </div>
-      ) : (
-        <form className=" flex flex-col w-full items-center justify-center space-y-4 text-sm">
-          <input
-            className="w-full max-w-sm h-10 border rounded-md px-2 bg-slate-100"
-            name="email"
-            type="email"
-            placeholder="Email or username"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-          <input
-            className="w-full max-w-sm h-10 border rounded-md px-2 bg-slate-100"
-            name="password"
-            type="password"
-            placeholder="Password"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-          <div className="flex w-full max-w-sm text-blue-400 font-bold text-xs justify-end">
-            Forgot password?
+    <div className="fixed z-10 flex flex-col items-center justify-center w-screen h-screen px-5 bg-slate-50">
+      <div className="flex flex-col items-center justify-center w-[90%] max-w-96 animate-slideInRight ease-smooth">
+        <h1 className="mb-4 text-5xl transition-all duration-300 font-logofont">
+          Instaclone
+        </h1>
+        {errorMsg && <div className="mb-4 text-red-600">{errorMsg}</div>}
+        {loading ? (
+          <div className="">
+            <Loader />
           </div>
-          <button
-            to="/feed"
-            className="flex w-full max-w-sm items-center justify-center h-10  bg-blue-500 text-white rounded-md shadow-md"
-            onClick={handleSignInButton}
-          >
-            Sign in
-          </button>
-        </form>
-      )}
-
-      <div className="absolute flex items-center justify-center bottom-0 w-full h-16 text-sm border-t space-x-1">
+        ) : (
+          <form className="flex flex-col items-center justify-center w-full space-y-4 text-sm ">
+            <input
+              className="w-full h-10 max-w-sm px-2 border rounded-md bg-slate-100"
+              name="email"
+              type="email"
+              placeholder="Email or username"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+            <input
+              className="w-full h-10 max-w-sm px-2 border rounded-md bg-slate-100"
+              name="password"
+              type="password"
+              placeholder="Password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+            <div className="flex justify-end w-full max-w-sm text-xs font-bold text-blue-400">
+              Forgot password?
+            </div>
+            <button
+              to="/feed"
+              className="flex items-center justify-center w-full h-10 max-w-sm text-white bg-blue-500 rounded-md shadow-md"
+              onClick={handleSignInButton}
+            >
+              Sign in
+            </button>
+          </form>
+        )}
+      </div>
+      <div className="absolute bottom-0 flex items-center justify-center w-full h-16 space-x-1 text-sm border-t">
         <span className="text-slate-400">Don't have an account?</span>
-        <Link to="/sign-up" className="text-blue-500 font-bold">
+        <Link to="/sign-up" className="font-bold text-blue-500">
           Sign Up
         </Link>
-        .
       </div>
     </div>
   );

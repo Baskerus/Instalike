@@ -8,11 +8,13 @@ import UserProfile from "./components/pages/user-profile/UserProfile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignUpPage from "./components/pages/SignUpPage";
 import { AuthProvider } from "./contexts/AuthContext";
+import firebase from "firebase/compat/app";
 
 function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const currentUser = firebase.auth().currentUser;
 
   const authProps = {
     email: email,
@@ -25,7 +27,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <div className="bg-slate-100 text-slate-800">
+        <div className="h-full bg-slate-100 text-slate-800">
           <Routes>
             <Route exact path="/" element={<SignInPage />}></Route>
             <Route
@@ -37,7 +39,7 @@ function App() {
               exact
               path="/feed/*"
               element={
-                <div className="flex relative items-center w-screen h-full justify-center">
+                <div className="relative flex items-center justify-center w-screen h-full">
                   <Navbar username={username} />
                   <Routes>
                     <Route exact path="/" element={<Feed />}></Route>
