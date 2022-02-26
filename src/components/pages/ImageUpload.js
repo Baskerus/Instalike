@@ -8,6 +8,9 @@ import { IoMdImages } from "react-icons/io";
 import { MdClose } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
+// TODO:
+// Limit the size of the image user can upload
+
 export default function ImageUpload() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);

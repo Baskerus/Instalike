@@ -6,6 +6,7 @@ import { IoPaperPlaneOutline } from "react-icons/io5";
 import { BiBookmark } from "react-icons/bi";
 import firebase from "firebase/compat/app";
 import { db } from "../../../firebase";
+import PostTime from "./PostTime";
 
 export default function Post({
   username,
@@ -19,7 +20,6 @@ export default function Post({
 }) {
   const currentUser = firebase.auth().currentUser.displayName;
 
-  const [postTime, setPostTime] = useState("");
   const [postLikes, setPostLikes] = useState(likes);
   const [user, setUser] = useState(username);
   const [postLiked, setPostLiked] = useState(false);
@@ -27,51 +27,8 @@ export default function Post({
   const [commentsArray, setCommentsArray] = useState([]);
   const [commentsLoaded, setCommentsLoaded] = useState(false);
   const [addedComment, setAddedComment] = useState();
-  const [time, setTime] = useState(Date.now());
+
   const textarea = useRef();
-
-  // Fix this with a component?
-  useEffect(() => {
-    const interval = setInterval(() => setTime(Date.now()), 1000);
-
-    // Calculates post age
-    if (timestamp) {
-      let postDate = timestamp.toDate();
-      let currentDate = Math.round(new Date().getTime() / 1000);
-      postDate = Math.round(postDate.getTime() / 1000);
-      let dateDiff = currentDate - postDate;
-
-      let h = Math.floor(dateDiff / 3600);
-      let m = Math.floor((dateDiff % 3600) / 60);
-      /*       let s = Math.floor((dateDiff % 3600) % 60); */
-
-      let hDisplay = h > 0 ? h + (h === 1 ? " hour " : " hours ") : "";
-      let mDisplay = m > 0 ? m + (m === 1 ? " minute " : " minutes ") : "";
-      // Decided not to use seconds ---- let sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-
-      // Displays the time since post was uploaded
-      if (dateDiff < 3600) {
-        if (mDisplay < 1) {
-          setPostTime("Just a moment ago.");
-        } else setPostTime(mDisplay + " ago");
-      } else if (h < 24) {
-        setPostTime(hDisplay + " ago");
-      } else if (h <= 720) {
-        let daysAgo = Math.round(h / 24);
-        setPostTime(daysAgo + ` day${daysAgo > 1 ? "s" : ""} ago`);
-      } else if (h > 720) {
-        let options = {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        };
-        setPostTime(timestamp.toDate().toLocaleDateString("en-GB", options));
-      }
-    } else
-      return () => {
-        clearInterval(interval);
-      };
-  }, [time]);
 
   useEffect(() => {
     // Gets data from the "comment" collection inside "posts"
@@ -94,6 +51,10 @@ export default function Post({
   }, []);
 
   useEffect(() => {
+    console.log("post rendered");
+  });
+
+  useEffect(() => {
     // Checks if user has already liked the post
     if (likedBy.includes(user)) {
       setPostLiked(true);
@@ -107,7 +68,7 @@ export default function Post({
     }
     //    v fixed the error?
     return;
-  }, [user, likedBy, timestamp]);
+  }, [user, likedBy]);
 
   function handlePostComment() {
     textarea.current.value = "";
@@ -212,7 +173,7 @@ export default function Post({
           )}
         </div>
 
-        <div className="text-xs text-neutral-400">{postTime}</div>
+        <PostTime timestamp={timestamp} />
         <div className="absolute bottom-0 left-0 flex w-full ADD A COMMENT ">
           <textarea
             ref={textarea}
