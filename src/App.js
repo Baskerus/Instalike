@@ -14,7 +14,6 @@ function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const currentUser = firebase.auth().currentUser;
 
   const authProps = {
     email: email,
@@ -27,7 +26,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <div className="h-full bg-slate-100 text-slate-800">
+        <div className="h-full overflow-hidden bg-slate-100 text-slate-800">
           <Routes>
             <Route exact path="/" element={<SignInPage />}></Route>
             <Route

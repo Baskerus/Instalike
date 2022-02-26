@@ -18,7 +18,6 @@ export default function Post({
   timestamp,
   id,
   likedBy,
-  comments,
 }) {
   const currentUser = firebase.auth().currentUser.displayName;
 
@@ -27,35 +26,34 @@ export default function Post({
   const [postLiked, setPostLiked] = useState(false);
   const [commentContent, setCommentContent] = useState("");
   const [commentsArray, setCommentsArray] = useState([]);
-  const [commentsLoaded, setCommentsLoaded] = useState(false);
-  const [addedComment, setAddedComment] = useState();
   const [likesModalOpen, setLikesModalOpen] = useState(false);
+  const [comments, setComments] = useState([]);
 
   const textarea = useRef();
 
   useEffect(() => {
     // Gets data from the "comment" collection inside "posts"
     // and stores them in commentsArray                                                  REVISIT THIS !!!!!!!!!!!!
+    getComments();
+    setCommentsArray(comments);
+    return;
+  }, [comments]);
 
-    if (commentsLoaded) {
-      return;
-    }
-    db.collection("posts")
+  async function getComments() {
+    let comments = [];
+    await db
+      .collection("posts")
       .doc(id)
       .collection("comments")
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          setCommentsArray((commentsArray) => [...commentsArray, doc.data()]);
-          setCommentsLoaded(true);
+          comments.push(doc.data());
         });
       });
-    setAddedComment("");
-  }, []);
-
-  useEffect(() => {
-    console.log("post rendered");
-  });
+    setComments(comments);
+    return comments;
+  }
 
   useEffect(() => {
     // Checks if user has already liked the post
@@ -82,8 +80,6 @@ export default function Post({
         .collection("comments")
         .add({ user: currentUser, content: commentContent });
     }
-
-    setAddedComment(commentContent);
   }
 
   function handleLike() {
@@ -123,7 +119,7 @@ export default function Post({
   }
 
   return (
-    <div className="relative flex flex-col w-full pb-16 my-6 overflow-hidden text-sm border rounded-md shadow-md bg-slate-50 shadow-slate-100">
+    <div className="relative flex flex-col w-full pb-16 my-6 text-sm border rounded-md shadow-md bg-slate-50 shadow-slate-100">
       <div className="flex items-center justify-between w-full p-4 lg:p-6">
         <div className="flex items-center justify-center space-x-2">
           <img
@@ -131,9 +127,14 @@ export default function Post({
             className="rounded-full IMAGE bg-slate-300 w-7 h-7"
             /*   alt="user avatar" */
           />
-          <a href="/" className="font-bold lowercase">
+          <span
+            onClick={() => {
+              getComments();
+            }}
+            className="font-bold lowercase"
+          >
             {username}
-          </a>
+          </span>
         </div>
         <BsThreeDotsVertical
           className="w-8 h-8 p-[.3rem] cursor-pointer text-neutral-500"
@@ -180,25 +181,16 @@ export default function Post({
           </div>
         </div>
         <div className="mb-2 ml-3">
-          {commentsArray &&
-            commentsArray.map((comment, index) => {
-              return (
-                <div key={index} className="flex COMMENT">
-                  <a href="/" className="mr-1 font-bold lowercase">
-                    {comment.user}
-                  </a>
-                  <div className="break-word">{comment.content}</div>
-                </div>
-              );
-            })}
-          {addedComment && (
-            <div className="flex COMMENT">
-              <a href="/" className="mr-1 font-bold lowercase">
-                {user}
-              </a>
-              <div className="break-word">{addedComment}</div>
-            </div>
-          )}
+          {commentsArray.map((comment, index) => {
+            return (
+              <div key={index} className="flex COMMENT">
+                <a href="/" className="mr-1 font-bold lowercase">
+                  {comment.user}
+                </a>
+                <div className="break-word">{comment.content}</div>
+              </div>
+            );
+          })}
         </div>
 
         <PostTime timestamp={timestamp} />
