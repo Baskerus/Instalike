@@ -103,6 +103,18 @@ export default function Post({
     }
   }
 
+  function handleDeletePost() {
+    db.collection("posts")
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("Post deleted");
+      })
+      .catch((error) => {
+        console.log("Error removing document: ", error);
+      });
+  }
+
   return (
     <div className="relative flex flex-col w-full pb-16 my-6 overflow-hidden text-sm border rounded-md shadow-md bg-slate-50 shadow-slate-100">
       <div className="flex items-center justify-between w-full p-4 lg:p-6">
@@ -116,7 +128,10 @@ export default function Post({
             {username}
           </a>
         </div>
-        <BsThreeDotsVertical className="text-neutral-500" />
+        <BsThreeDotsVertical
+          className="w-8 h-8 p-[.3rem] cursor-pointer text-neutral-500"
+          onClick={handleDeletePost}
+        />
       </div>
       <img
         alt=""
