@@ -7,6 +7,7 @@ import { BiBookmark } from "react-icons/bi";
 import firebase from "firebase/compat/app";
 import { db } from "../../../firebase";
 import PostTime from "./PostTime";
+import PostLikes from "../../modals/PostLikes";
 
 export default function Post({
   username,
@@ -17,6 +18,7 @@ export default function Post({
   timestamp,
   id,
   likedBy,
+  comments,
 }) {
   const currentUser = firebase.auth().currentUser.displayName;
 
@@ -27,6 +29,7 @@ export default function Post({
   const [commentsArray, setCommentsArray] = useState([]);
   const [commentsLoaded, setCommentsLoaded] = useState(false);
   const [addedComment, setAddedComment] = useState();
+  const [likesModalOpen, setLikesModalOpen] = useState(false);
 
   const textarea = useRef();
 
@@ -115,6 +118,10 @@ export default function Post({
       });
   }
 
+  async function handleViewLikes() {
+    setLikesModalOpen(!likesModalOpen);
+  }
+
   return (
     <div className="relative flex flex-col w-full pb-16 my-6 overflow-hidden text-sm border rounded-md shadow-md bg-slate-50 shadow-slate-100">
       <div className="flex items-center justify-between w-full p-4 lg:p-6">
@@ -133,11 +140,17 @@ export default function Post({
           onClick={handleDeletePost}
         />
       </div>
-      <img
-        alt=""
-        src={image}
-        className="max-h-[26rem] lg:max-h-[32rem] h-full object-scale-down select-none bg-slate-100 rounded-md"
-      ></img>
+      <div className="relative flex items-center justify-center bg-slate-100">
+        <img
+          alt=""
+          src={image}
+          className="object-scale-down max-h-[26rem] h-full lg:max-h-[35rem] rounded-md select-none"
+        ></img>
+        {likesModalOpen && (
+          <PostLikes likedBy={likedBy} closeModal={handleViewLikes} />
+        )}
+      </div>
+
       <div className="flex items-center justify-between w-full px-4 py-3 text-2xl lg:px-6">
         <div className="flex space-x-6">
           {postLiked ? (
@@ -154,19 +167,19 @@ export default function Post({
       </div>
 
       <div className="flex flex-col px-4 select-none lg:px-6">
-        <div className="font-bold">
+        <div onClick={handleViewLikes} className="font-bold cursor-pointer">
           {postLikes !== 0 ? postLikes : "No"}{" "}
           {postLikes === 1 ? "like" : "likes"}
         </div>
         <div className="flex">
-          <a href="/" className="mr-1 font-bold lowercase">
+          <a href="/" className="mr-1 font-bold lowercase ">
             {username}
           </a>
           <div className="break-word max-w-[40ch] md:max-w-[75ch] mb-1">
             {description}
           </div>
         </div>
-        <div className="COMM_CONTAINER">
+        <div className="mb-2 ml-3">
           {commentsArray &&
             commentsArray.map((comment, index) => {
               return (

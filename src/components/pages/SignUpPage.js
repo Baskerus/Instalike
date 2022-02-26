@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { MdClose } from "react-icons/md";
 import { BsChevronLeft } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
