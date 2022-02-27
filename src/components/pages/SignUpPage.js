@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BsChevronLeft } from "react-icons/bs";
+
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import Avatar from "../modals/Avatar";
@@ -46,7 +46,7 @@ export default function SignUpPage() {
 
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen p-4 overflow-hidden bg-slate-50">
-      <div className="flex relative flex-col items-center justify-center w-[90%] max-w-sm animate-slideInLeft ease-smooth">
+      <div className="flex relative flex-col items-center justify-center w-[90%] max-w-sm animate-slideInLeft ease">
         <h1 className="mb-4 text-5xl font-logofont">Instaclone</h1>
         <form className="flex flex-col items-center justify-center w-full space-y-4 ">
           <input
@@ -76,26 +76,19 @@ export default function SignUpPage() {
               setPassword(e.target.value);
             }}
           ></input>
-          <Link
-            to="/sign-up"
-            className="flex items-center justify-center w-full h-10 max-w-sm text-white bg-blue-500 rounded-md shadow-md"
-            onClick={handleSignUp}
-          >
-            Sign Up
-          </Link>
+          <span className="w-full ">
+            <Link
+              to="/sign-up"
+              className="flex items-center justify-center mt-6 w-full h-10 max-w-sm  text-white bg-blue-500 rounded-md shadow-md"
+              onClick={handleSignUp}
+            >
+              Sign Up
+            </Link>
+          </span>
         </form>
-        <Link
-          to="/"
-          className="absolute hidden w-12 h-12 font-bold cursor-pointer -left-20 text-slate-300 sm:block"
-        >
-          <BsChevronLeft className="w-full h-full" />
-        </Link>
 
         {pending && (
-          <Avatar
-            setPending={setPending}
-            handleSignUp={handleSignUp}
-          />
+          <Avatar setPending={setPending} handleSignUp={handleSignUp} />
         )}
       </div>
       <div className="absolute bottom-0 flex items-center justify-center w-full h-16 space-x-1 text-sm border-t">

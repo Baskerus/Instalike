@@ -13,11 +13,11 @@ module.exports = {
       },
       keyframes: {
         slideInRight: {
-          "0%": { transform: "translateX(-150px)", opacity: "0" },
+          "0%": { transform: "translateX(-100px)", opacity: "0" },
           "100%": { transform: "translateX(0px)", opacity: "1" },
         },
         slideInLeft: {
-          "0%": { transform: "translateX(150px)", opacity: "0" },
+          "0%": { transform: "translateX(100px)", opacity: "0" },
           "100%": { transform: "translateX(0px)", opacity: "1" },
         },
         fadeIn: {
@@ -26,12 +26,12 @@ module.exports = {
         },
       },
       animation: {
-        slideInRight: "slideInRight 0.5s",
-        slideInLeft: "slideInLeft 0.5s",
+        slideInRight: "slideInRight .6s",
+        slideInLeft: "slideInLeft .6s",
         fadeIn: "fadeIn 0.15s",
       },
       transitionTimingFunction: {
-        smooth: "cubic-bezier(0,.59,.37,.98)",
+        smooth: "cubic-bezier(.96,.06,1,-0.12)",
       },
     },
   },
