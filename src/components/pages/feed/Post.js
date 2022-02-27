@@ -39,7 +39,10 @@ export default function Post({
       setUser(firebase.auth().currentUser.displayName);
     }
     //    v fixed the error?
-    return;
+    return()=>{
+      setUser("")
+      setPostLiked(false)
+    }
   }, [user, likedBy]);
 
   function handleLike() {

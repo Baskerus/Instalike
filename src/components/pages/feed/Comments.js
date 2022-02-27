@@ -2,20 +2,27 @@ import React, { useState, useEffect, useRef } from "react";
 import { db } from "../../../firebase";
 import firebase from "firebase/compat/app";
 
-function Comments({ id , setCommentsArray}) {
+function Comments({ id, setCommentsArray }) {
   const [commentContent, setCommentContent] = useState("");
   const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(false);
   const currentUser = firebase.auth().currentUser.displayName;
   const textarea = useRef();
 
   useEffect(() => {
     // Gets data from the "comment" collection inside "posts"
-    getComments();
+    if (!loading) {
+      getComments();
+    }
     setCommentsArray(comments);
-    return;
+    return () => {
+      setCommentsArray([]);
+      setLoading(false);
+    };
   }, [comments]);
 
   async function getComments() {
+    setLoading(true);
     let comments = [];
     await db
       .collection("posts")
@@ -25,6 +32,7 @@ function Comments({ id , setCommentsArray}) {
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           comments.push(doc.data());
+          setLoading(false);
         });
       });
     setComments(comments);

@@ -26,6 +26,10 @@ export default function Feed() {
         }))
       );
     });
+
+    return()=>{
+      setPosts([])
+    }
   }, [user, navigate]);
 
   return (

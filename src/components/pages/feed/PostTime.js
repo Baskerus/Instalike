@@ -21,7 +21,8 @@ function PostTime({ timestamp }) {
 
       let hDisplay = h > 0 ? h + (h === 1 ? " hour " : " hours ") : "";
       let mDisplay = m > 0 ? m + (m === 1 ? " minute " : " minutes ") : "";
-      // Decided not to use seconds ---- let sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+      // Decided not to use seconds vvv
+      // let sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
 
       // Displays the time since post was uploaded
       if (dateDiff < 3600) {
@@ -41,6 +42,11 @@ function PostTime({ timestamp }) {
         };
         setPostTime(timestamp.toDate().toLocaleDateString("en-GB", options));
       }
+
+      return () => {
+        setPostTime();
+        setTime(Date.now());
+      };
     } else
       return () => {
         clearInterval(interval);
