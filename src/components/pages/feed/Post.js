@@ -23,7 +23,7 @@ export default function Post({
   const [postLikes, setPostLikes] = useState(likes);
   const [user, setUser] = useState(username);
   const [postLiked, setPostLiked] = useState(false);
-  const [commentsArray, setCommentsArray] = useState([]);
+
   const [likesModalOpen, setLikesModalOpen] = useState(false);
 
   useEffect(() => {
@@ -137,17 +137,8 @@ export default function Post({
           </div>
         </div>
         <div className="mb-2 ml-3">
-          <Comments id={id} setCommentsArray={setCommentsArray} />
-          {commentsArray.map((comment, index) => {
-            return (
-              <div key={index} className="flex COMMENT">
-                <a href="/" className="mr-1 font-bold lowercase">
-                  {comment.user}
-                </a>
-                <div className="break-word">{comment.content}</div>
-              </div>
-            );
-          })}
+          <Comments id={id} />
+        
         </div>
 
         <PostTime timestamp={timestamp} />

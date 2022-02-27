@@ -11,7 +11,7 @@ export default function Navbar({ username }) {
  
   return (
     <nav className="navbar fixed flex top-0 w-full max-w-2xl px-3 py-2 justify-between items-center border rounded-b-md bg-slate-50 z-10 select-none">
-      <span className="font-logofont text-4xl">Instaclone</span>
+      <span className="font-logofont text-4xl">Instalike</span>
       {username}
       <div className="flex text-2xl space-x-6">
         <Link to="/upload">
