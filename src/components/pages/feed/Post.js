@@ -8,6 +8,7 @@ import firebase from "firebase/compat/app";
 import { db } from "../../../firebase";
 import PostTime from "./PostTime";
 import PostLikes from "../../modals/PostLikes";
+import Comments from "./Comments";
 
 export default function Post({
   username,
@@ -19,41 +20,11 @@ export default function Post({
   id,
   likedBy,
 }) {
-  const currentUser = firebase.auth().currentUser.displayName;
-
   const [postLikes, setPostLikes] = useState(likes);
   const [user, setUser] = useState(username);
   const [postLiked, setPostLiked] = useState(false);
-  const [commentContent, setCommentContent] = useState("");
   const [commentsArray, setCommentsArray] = useState([]);
   const [likesModalOpen, setLikesModalOpen] = useState(false);
-  const [comments, setComments] = useState([]);
-
-  const textarea = useRef();
-
-  useEffect(() => {
-    // Gets data from the "comment" collection inside "posts"
-    // and stores them in commentsArray                                                  REVISIT THIS !!!!!!!!!!!!
-    getComments();
-    setCommentsArray(comments);
-    return;
-  }, [comments]);
-
-  async function getComments() {
-    let comments = [];
-    await db
-      .collection("posts")
-      .doc(id)
-      .collection("comments")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          comments.push(doc.data());
-        });
-      });
-    setComments(comments);
-    return comments;
-  }
 
   useEffect(() => {
     // Checks if user has already liked the post
@@ -70,17 +41,6 @@ export default function Post({
     //    v fixed the error?
     return;
   }, [user, likedBy]);
-
-  function handlePostComment() {
-    textarea.current.value = "";
-
-    if (currentUser && commentContent) {
-      db.collection("posts")
-        .doc(id)
-        .collection("comments")
-        .add({ user: currentUser, content: commentContent });
-    }
-  }
 
   function handleLike() {
     let db = firebase.firestore();
@@ -127,14 +87,7 @@ export default function Post({
             className="rounded-full IMAGE bg-slate-300 w-7 h-7"
             /*   alt="user avatar" */
           />
-          <span
-            onClick={() => {
-              getComments();
-            }}
-            className="font-bold lowercase"
-          >
-            {username}
-          </span>
+          <span className="font-bold lowercase">{username}</span>
         </div>
         <BsThreeDotsVertical
           className="w-8 h-8 p-[.3rem] cursor-pointer text-neutral-500"
@@ -181,6 +134,7 @@ export default function Post({
           </div>
         </div>
         <div className="mb-2 ml-3">
+          <Comments id={id} setCommentsArray={setCommentsArray} />
           {commentsArray.map((comment, index) => {
             return (
               <div key={index} className="flex COMMENT">
@@ -194,30 +148,6 @@ export default function Post({
         </div>
 
         <PostTime timestamp={timestamp} />
-        <div className="absolute bottom-0 left-0 flex w-full ADD A COMMENT ">
-          <textarea
-            ref={textarea}
-            onChange={(e) => setCommentContent(e.target.value)}
-            placeholder="Add a comment..."
-            className="w-full h-12 px-3 py-3 text-sm border-t resize-none focus:outline-slate-300 placeholder:text-slate-300"
-          ></textarea>
-
-          {commentContent ? (
-            <button
-              onClick={handlePostComment}
-              className={`flex items-center justify-center text-sky-400 text-sm p-3 px-5 border-x border-t bg-neutral-50 cursor-pointer`}
-            >
-              Post
-            </button>
-          ) : (
-            <button
-              disabled
-              className={`flex items-center justify-center text-sky-200 text-sm p-3 px-5 border-x border-t bg-neutral-50`}
-            >
-              Post
-            </button>
-          )}
-        </div>
       </div>
     </div>
   );
