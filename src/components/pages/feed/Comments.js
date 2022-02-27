@@ -11,9 +11,7 @@ function Comments({ id, setCommentsArray }) {
 
   useEffect(() => {
     // Gets data from the "comment" collection inside "posts"
-    if (!loading) {
-      getComments();
-    }
+    getComments();
     setCommentsArray(comments);
     return () => {
       setCommentsArray([]);

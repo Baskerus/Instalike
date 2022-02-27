@@ -81,7 +81,7 @@ export default function ImageUpload() {
 
         {image && (
           <div className="flex flex-col items-center justify-center w-full space-y-2">
-            <span className="flex items-center justify-center w-full px-12 truncate sm:px-32 text-slate-500">
+            <span className="flex items-center justify-center w-48 md:w-80 truncate text-slate-500">
               {image.name}
             </span>
             <div className="flex items-center justify-center w-full">
