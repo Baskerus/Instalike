@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
@@ -39,10 +39,10 @@ export default function Post({
       setUser(firebase.auth().currentUser.displayName);
     }
     //    v fixed the error?
-    return()=>{
-      setUser("")
-      setPostLiked(false)
-    }
+    return () => {
+      setUser("");
+      setPostLiked(false);
+    };
   }, [user, likedBy]);
 
   function handleLike() {

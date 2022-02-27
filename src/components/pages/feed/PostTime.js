@@ -51,7 +51,7 @@ function PostTime({ timestamp }) {
       return () => {
         clearInterval(interval);
       };
-  }, [time]);
+  }, [time, timestamp]);
 
   return <div className="text-xs text-neutral-400">{postTime}</div>;
 }

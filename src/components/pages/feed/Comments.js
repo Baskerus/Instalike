@@ -1,25 +1,34 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { db } from "../../../firebase";
 import firebase from "firebase/compat/app";
 
 function Comments({ id, setCommentsArray }) {
   const [commentContent, setCommentContent] = useState("");
   const [comments, setComments] = useState([]);
+  const [hasLoaded, setHasLoaded] = useState(false);
   const currentUser = firebase.auth().currentUser.displayName;
   const textarea = useRef();
-  const hasLoaded = useRef(false);
 
   useEffect(() => {
     // Gets data from the "comment" collection inside "posts"
-    if (!hasLoaded.current) {
+
+    renderComments();
+
+    return;
+  }, [hasLoaded]);
+
+  function renderComments() {
+    if (!hasLoaded) {
       getComments();
-      setCommentsArray(comments);
-      hasLoaded.current = true;
+      console.log("loaded comments");
     }
-  });
+    setCommentsArray(comments);
+    console.log("rendered component");
+  }
 
   async function getComments() {
     let comments = [];
+    setHasLoaded(false);
     await db
       .collection("posts")
       .doc(id)
@@ -29,13 +38,17 @@ function Comments({ id, setCommentsArray }) {
         querySnapshot.forEach((doc) => {
           comments.push(doc.data());
         });
+        setComments(comments);
+        console.log("comments after getComments(): ", comments);
       });
-    setComments(comments);
+    setHasLoaded(true);
+
     return comments;
   }
 
   function handlePostComment() {
     textarea.current.value = "";
+    setHasLoaded(false);
 
     if (currentUser && commentContent) {
       db.collection("posts")
@@ -53,7 +66,6 @@ function Comments({ id, setCommentsArray }) {
         placeholder="Add a comment..."
         className="w-full h-12 px-3 py-3 text-sm border-t resize-none focus:outline-slate-300 placeholder:text-slate-300"
       ></textarea>
-
       {commentContent ? (
         <button
           onClick={handlePostComment}
