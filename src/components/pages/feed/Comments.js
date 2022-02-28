@@ -3,7 +3,7 @@ import { db } from "../../../firebase";
 import firebase from "firebase/compat/app";
 import Error from "../../modals/Error";
 
-function Comments({ id }) {
+function Comments({ id, comments }) {
   const [commentContent, setCommentContent] = useState("");
   const [commentsArray, setCommentsArray] = useState([]);
   const [showError, setShowError] = useState(false);
@@ -12,37 +12,32 @@ function Comments({ id }) {
   const textarea = useRef();
 
   useEffect(() => {
-    // Gets data from the "comment" collection inside "posts"
-    let comms = [];
-
-    db.collection("posts")
-      .doc(id)
-      .collection("comments")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          comms.push(doc.data());
-        });
-        setCommentsArray(comms);
-      });
-
+    if (comments) {
+      console.log("Rendered comments...");
+      setCommentsArray(comments);
+    }
     return;
-  }, [render, id, setCommentsArray]);
+  }, []);
 
-  function handlePostComment() {
-    if (commentsArray.length > 10) {
+  async function handlePostComment() {
+    /*   if (commentsArray.length > 10) {
       setShowError(true);
       return;
-    }
+    } */
+    setCommentsArray([
+      ...commentsArray,
+      { user: currentUser, content: commentContent },
+    ]);
+    await db
+      .collection("posts")
+      .doc(id)
+      .update({
+        comments: [
+          ...commentsArray,
+          { user: currentUser, content: commentContent },
+        ],
+      });
     textarea.current.value = "";
-    setRender(!render);
-
-    if (currentUser && commentContent) {
-      db.collection("posts")
-        .doc(id)
-        .collection("comments")
-        .add({ user: currentUser, content: commentContent });
-    }
   }
 
   function onEnterPress(e) {

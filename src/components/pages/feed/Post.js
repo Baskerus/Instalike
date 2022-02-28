@@ -19,6 +19,7 @@ export default function Post({
   timestamp,
   id,
   likedBy,
+  comments,
 }) {
   const [postLikes, setPostLikes] = useState(likes);
   const [user, setUser] = useState(username);
@@ -137,8 +138,7 @@ export default function Post({
           </div>
         </div>
         <div className="mb-2 ml-3">
-          <Comments id={id} />
-        
+          <Comments id={id} comments={comments} />
         </div>
 
         <PostTime timestamp={timestamp} />
