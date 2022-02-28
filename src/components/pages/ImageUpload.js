@@ -53,7 +53,7 @@ export default function ImageUpload() {
   };
   return (
     <div className="fixed top-0 flex flex-col items-center justify-center w-full h-full p-4 bg-slate-300">
-      <div className="flex flex-col relative min-w-[240px] max-w-lg w-full h-[470px] items-center justify-center bg-slate-50 rounded-xl space-y-6  shadow-xl">
+      <div className="flex flex-col relative min-w-[240px] max-w-md w-full h-[470px] items-center justify-center bg-slate-50 rounded-xl space-y-6  shadow-xl">
         <MdClose
           onClick={() => navigate("/feed")}
           className="absolute top-0 right-0 w-10 h-10 p-2 m-2 cursor-pointer text-slate-500"
@@ -63,7 +63,7 @@ export default function ImageUpload() {
         </div>
         <IoMdImages className="text-[100px] text-slate-300 " />
         <textarea
-          className="h-16 max-w-md w-[80%] p-3 text-sm resize-none focus:outline-slate-300"
+          className="h-16 max-w-sm w-[80%] p-3 text-sm resize-none focus:outline-slate-300 rounded-md border"
           maxLength={80}
           placeholder="Enter image caption..."
           onChange={(e) => setDescription(e.target.value)}
@@ -81,7 +81,7 @@ export default function ImageUpload() {
 
         {image && (
           <div className="flex flex-col items-center justify-center w-full space-y-2">
-            <span className="flex items-center justify-center w-48 md:w-80 truncate text-slate-500">
+            <span className="flex items-center justify-center w-48 md:w-80 truncate text-slate-500 text-xs">
               {image.name}
             </span>
             <div className="flex items-center justify-center w-full">

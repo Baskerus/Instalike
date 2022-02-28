@@ -7,7 +7,7 @@ function Comments({ id, comments }) {
   const [commentContent, setCommentContent] = useState("");
   const [commentsArray, setCommentsArray] = useState([]);
   const [showError, setShowError] = useState(false);
-  const [render, setRender] = useState(false);
+
   const currentUser = firebase.auth().currentUser.displayName;
   const textarea = useRef();
 
@@ -20,10 +20,10 @@ function Comments({ id, comments }) {
   }, []);
 
   async function handlePostComment() {
-    /*   if (commentsArray.length > 10) {
+    if (commentsArray.length > 10) {
       setShowError(true);
       return;
-    } */
+    }
     setCommentsArray([
       ...commentsArray,
       { user: currentUser, content: commentContent },
