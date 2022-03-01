@@ -6,13 +6,16 @@ import { useAuth } from "../../contexts/AuthContext";
 function Settings() {
   const { logout } = useAuth();
   return (
-    <ul className="absolute top-0 right-0 w-48 border bg-slate-50 rounded-b-md text-md cursor-pointer">
+    <ul className="absolute top-0 right-0 w-48 border bg-slate-50 rounded-b-md text-md cursor-pointer animate-slideInTop">
       <li className="flex items-center h-10 p-4 space-x-2 font-sans"></li>
-      <li className="flex items-center h-14 p-4 space-x-2 border-b font-sans">
+      <li className="flex items-center h-14 p-4 space-x-2 border-b font-sans animate-slideInTop">
         <IoSettingsOutline />
         <span>Settings</span>
       </li>
-      <li onClick={logout} className="flex items-center h-14 p-4 space-x-2">
+      <li
+        onClick={logout}
+        className="flex items-center h-14 p-4 space-x-2 animate-slideInTopFast"
+      >
         <FiLogOut />
         <span>Log out</span>
       </li>

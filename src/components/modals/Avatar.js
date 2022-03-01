@@ -1,22 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
+import firebase from "firebase/compat/app";
+import "firebase/storage";
+import { db } from "../../firebase";
 
-function Avatar({ setPending, setAvatar, handleSignUp, avatar }) {
-  const handleChange = (e) => {
+function Avatar({ setShowAvatar }) {
+  const [avatar, setAvatar] = useState();
+
+  const storage = firebase.storage();
+  const user = firebase.auth().currentUser;
+
+  function handleChange(e) {
     if (e.target.files[0]) {
       setAvatar(e.target.files[0]);
     }
-    console.log(avatar.name);
-  };
+  }
+
+  function handleUpload() {
+    storage
+      .ref(`/avatars/${avatar.name}`)
+      .put(avatar)
+      .then(() => {
+        storage
+          .ref("/avatars")
+          .child(avatar.name)
+          .getDownloadURL()
+          .then((url) => {
+            // Post image to the database
+            db.collection("avatars").add({
+              imageUrl: url,
+              username: user.displayName,
+            });
+            console.log("Image uploaded to DB");
+          });
+        console.log("Uploaded successfully");
+      });
+  }
   return (
-    <div className="absolute flex items-center justify-center w-screen h-screen text-sm border backdrop-blur-sm">
-      <div className="relative flex flex-col items-center justify-center h-56 p-4 space-y-4 text-sm border rounded-lg shadow-lg w-72 bg-slate-50 text-slate-500">
+    <div className="absolute right-0 top-[-14rem] flex items-center justify-center text-sm  animate-fadeIn z-[2]">
+      <div className="relative flex flex-col items-center justify-center h-56 p-4 pb-0 space-y-4 text-sm rounded-lg rounded-b-none border border-b-0  w-64 bg-slate-50 text-slate-500 animate-slideInBottomFast">
         <MdClose
-          onClick={() => setPending(false)}
+          onClick={() => setShowAvatar(false)}
           className="absolute top-0 right-0 w-8 h-8 m-2 cursor-pointer text-slate-400"
         />
-        <span>Choose a profile image</span>
-        <label className="flex items-center justify-center w-48 h-10 text-white truncate bg-blue-400 rounded-md shadow-lg cursor-pointer">
+        <span className="animate-slideInBottomFaster">
+          Choose a profile image
+        </span>
+        <label className="flex items-center justify-center w-48 h-10 text-white truncate bg-blue-400 rounded-md shadow-lg cursor-pointer animate-slideInBottomFast">
           {avatar ? (
             <span className="w-32 truncate">{avatar.name}</span>
           ) : (
@@ -30,8 +60,8 @@ function Avatar({ setPending, setAvatar, handleSignUp, avatar }) {
         </label>
 
         <button
-          onClick={handleSignUp}
-          className="flex items-center justify-center w-48 h-10 text-white bg-blue-500 rounded-md shadow-lg"
+          onClick={handleUpload}
+          className="flex items-center justify-center w-48 h-10 text-white bg-blue-500 rounded-md shadow-lg animate-slideInBottom"
         >
           Upload and sign up
         </button>
@@ -41,5 +71,3 @@ function Avatar({ setPending, setAvatar, handleSignUp, avatar }) {
 }
 
 export default Avatar;
-
-// ADD UPLOAD AVATAR FUNCTIONALITY :**** dobro jutro isto:D:D:D:DD :( :*( <:*(

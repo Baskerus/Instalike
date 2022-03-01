@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BottomNav from "./components/ui/BottomNav";
 import Feed from "./components/pages/feed/Feed";
 import Navbar from "./components/ui/Navbar";
@@ -8,11 +8,34 @@ import UserProfile from "./components/pages/user-profile/UserProfile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignUpPage from "./components/pages/SignUpPage";
 import { AuthProvider } from "./contexts/AuthContext";
+import { db } from "./firebase";
 
 function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [avatarsArray, setAvatarsArray] = useState();
+  const [avatarUsers, setAvatarUsers] = useState();
+
+  useEffect(() => {
+    db.collection("avatars").onSnapshot((snapshot) => {
+      setAvatarsArray(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          details: doc.data(),
+        }))
+      );
+    });
+  }, []);
+  useEffect(() => {
+    if (avatarsArray) {
+      let avatarUsers = [];
+      avatarsArray.map((avatar) => {
+        avatarUsers.push(avatar.details.username);
+        setAvatarUsers([...avatarUsers, avatar.details.username]);
+      });
+    }
+  }, [avatarsArray]);
 
   const authProps = {
     email: email,
@@ -43,7 +66,10 @@ function App() {
                     <Route exact path="/" element={<Feed />}></Route>
                     <Route exact path="/user" element={<UserProfile />}></Route>
                   </Routes>
-                  <BottomNav />
+                  <BottomNav
+                    avatarUsers={avatarUsers}
+                    avatarsArray={avatarsArray}
+                  />
                 </div>
               }
             ></Route>

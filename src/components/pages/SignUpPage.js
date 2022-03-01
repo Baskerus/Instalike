@@ -7,11 +7,10 @@ import firebase from "firebase/compat/app";
 
 export default function SignUpPage() {
   const { signup } = useAuth();
-  const [loading, setLoading] = useState(false);
+
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [pending, setPending] = useState(false);
 
   const currentUser = firebase.auth().currentUser;
   const navigate = useNavigate();
@@ -22,32 +21,18 @@ export default function SignUpPage() {
     }
   });
 
-  async function handleSubmit(e) {
-    /*   try {
-      setLoading(true);
-      await signup(email, password, username);
-    } catch {
-      console.log("Failed to create an account");
-    } */
-    setLoading(false);
-    setPending(false);
-  }
-
   async function handleSignUp() {
     try {
-      setLoading(true);
       await signup(email, password, username);
     } catch {
       console.log("Failed to create an account");
     }
-    setLoading(false);
-    setPending(false);
   }
 
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen p-4 overflow-hidden bg-slate-50">
       <div className="flex relative flex-col items-center justify-center w-[90%] max-w-sm animate-slideInLeft ease">
-        <h1 className="mb-4 text-5xl font-logofont">Instaclone</h1>
+        <h1 className="mb-4 text-5xl font-logofont">Instalike</h1>
         <form className="flex flex-col items-center justify-center w-full space-y-4 ">
           <input
             className="w-full h-10 max-w-sm px-2 border rounded-md bg-slate-100"
@@ -86,10 +71,6 @@ export default function SignUpPage() {
             </Link>
           </span>
         </form>
-
-        {pending && (
-          <Avatar setPending={setPending} handleSignUp={handleSignUp} />
-        )}
       </div>
       <div className="absolute bottom-0 flex items-center justify-center w-full h-16 space-x-1 text-sm border-t">
         <span className="text-slate-400">Already have an account?</span>

@@ -20,6 +20,14 @@ module.exports = {
           "0%": { transform: "translateX(100px)", opacity: "0" },
           "100%": { transform: "translateX(0px)", opacity: "1" },
         },
+        slideInTop: {
+          "0%": { transform: "translateY(-100px)", opacity: "0" },
+          "100%": { transform: "translateY(0px)", opacity: "1" },
+        },
+        slideInBottom: {
+          "0%": { transform: "translateY(100px)", opacity: "0" },
+          "100%": { transform: "translateY(0px)", opacity: "1" },
+        },
         fadeIn: {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
@@ -28,7 +36,14 @@ module.exports = {
       animation: {
         slideInRight: "slideInRight .6s",
         slideInLeft: "slideInLeft .6s",
-        fadeIn: "fadeIn 0.15s",
+        slideInLeftFast: "slideInLeft .3s",
+        slideInTopFaster: "slideInTop .15s",
+        slideInTopFast: "slideInTop .3s",
+        slideInTop: "slideInTop .45s",
+        slideInBottom: "slideInBottom .45s",
+        slideInBottomFast: "slideInBottom .35s",
+        slideInBottomFaster: "slideInBottom .15s",
+        fadeIn: "fadeIn 0.3s",
       },
       transitionTimingFunction: {
         smooth: "cubic-bezier(.96,.06,1,-0.12)",

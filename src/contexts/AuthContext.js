@@ -2,8 +2,10 @@ import React, { useContext, useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import { db } from "../firebase";
 
 const AuthContext = React.createContext();
+let database = db;
 
 export function useAuth() {
   return useContext(AuthContext);
@@ -22,6 +24,7 @@ export function AuthProvider({ children }) {
         console.log(username, " signed up.");
         return user.updateProfile({
           displayName: username,
+          avatar: "",
         });
       });
   }
@@ -55,6 +58,7 @@ export function AuthProvider({ children }) {
     signup,
     login,
     logout,
+    database,
   };
 
   return (

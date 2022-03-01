@@ -3,9 +3,11 @@ import Post from "./Post";
 import { db } from "../../../firebase";
 import firebase from "firebase/compat/app";
 import { useNavigate } from "react-router-dom";
+import Avatar from "../../modals/Avatar";
 
 export default function Feed() {
   const [posts, setPosts] = useState([]);
+
   let user = firebase.auth().currentUser;
   const navigate = useNavigate();
 
@@ -14,7 +16,6 @@ export default function Feed() {
     if (!user) {
       console.log("No user was detected - returning to sign in...");
       navigate("/", { replace: true });
-      // v fixes "Can't perform a React state update on an unmounted component."
       return;
     }
 
@@ -27,9 +28,9 @@ export default function Feed() {
       );
     });
 
-    return()=>{
-      setPosts([])
-    }
+    return () => {
+      setPosts([]);
+    };
   }, [user, navigate]);
 
   return (
