@@ -85,7 +85,7 @@ export default function SignInPage() {
           </form>
         )}
       </div>
-      <div className="absolute bottom-0 flex items-center justify-center w-full h-16 space-x-1 text-sm border-t">
+      <div className="absolute bottom-0 flex items-center justify-center w-full h-16 space-x-1 text-sm border-t bg-slate-50">
         <span className="text-slate-400">Don't have an account?</span>
         <Link to="/sign-up" className="font-bold text-blue-500">
           Sign Up

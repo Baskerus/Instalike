@@ -72,7 +72,7 @@ export default function SignUpPage() {
           </span>
         </form>
       </div>
-      <div className="absolute bottom-0 flex items-center justify-center w-full h-16 space-x-1 text-sm border-t">
+      <div className="absolute bottom-0 flex items-center justify-center w-full h-16 space-x-1 text-sm border-t bg-slate-50">
         <span className="text-slate-400">Already have an account?</span>
         <Link to="/" className="font-bold text-blue-500">
           Sign In

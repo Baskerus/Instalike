@@ -53,8 +53,8 @@ function Avatar({ setShowAvatar, avatarsArray }) {
     }
   }
   return (
-    <div className="absolute right-0 bottom-16 flex items-center justify-center text-sm  animate-fadeIn z-[2]">
-      <div className="relative flex flex-col items-center justify-center p-4 pb-8 space-y-4 text-sm rounded-lg rounded-b-none border border-b-0  w-64 bg-slate-50 text-slate-500 animate-slideInBottomFast">
+    <div className="absolute right-0 bottom-16 flex items-center justify-center text-sm  animate-fadeIn z-[2] ">
+      <div className="relative flex flex-col items-center justify-center w-64 p-4 pb-8 space-y-4 text-sm border border-b-0 rounded-lg rounded-b-none bg-slate-50 text-slate-500 animate-slideInBottomFast">
         <MdClose
           onClick={() => setShowAvatar(false)}
           className="absolute top-0 right-0 w-8 h-8 m-2 cursor-pointer text-slate-400"
@@ -62,7 +62,7 @@ function Avatar({ setShowAvatar, avatarsArray }) {
         <span className="animate-slideInBottomFaster">Choose an avatar</span>
         <label className="flex items-center justify-center w-48 h-10 text-white truncate bg-blue-400 rounded-md shadow-lg cursor-pointer animate-slideInBottomFast">
           {avatar ? (
-            <span className="w-32 truncate text-center">{avatar.name}</span>
+            <span className="w-32 text-center truncate">{avatar.name}</span>
           ) : (
             "Select an image"
           )}

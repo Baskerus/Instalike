@@ -26,6 +26,7 @@ export default function Post({
   const [postLiked, setPostLiked] = useState(false);
   const [likesModalOpen, setLikesModalOpen] = useState(false);
   const [usersAvatar, setUsersAvatar] = useState();
+  const [postSettingsOpen, setPostSettingsOpen] = useState(false);
 
   useEffect(() => {
     // Checks if user has already liked the post
@@ -90,6 +91,10 @@ export default function Post({
       });
   }
 
+  function openPostSettings() {
+    setPostSettingsOpen(!postSettingsOpen);
+  }
+
   async function handleViewLikes() {
     setLikesModalOpen(!likesModalOpen);
   }
@@ -98,11 +103,11 @@ export default function Post({
     <div className="relative flex flex-col w-full pb-16 my-6 text-sm border rounded-md shadow-md bg-slate-50 shadow-slate-100">
       <div className="flex items-center justify-between w-full p-4 lg:p-6">
         <div className="flex items-center justify-center space-x-2">
-          <div className="flex w-8 h-8 border rounded-full overflow-hidden cursor-pointer z-10">
+          <div className="z-10 flex w-8 h-8 overflow-hidden border rounded-full cursor-pointer">
             {usersAvatar ? (
               <img
                 alt="user avatar"
-                className="w-full object-cover"
+                className="object-cover w-full"
                 src={usersAvatar}
               ></img>
             ) : (
@@ -115,7 +120,7 @@ export default function Post({
         </div>
         <BsThreeDotsVertical
           className="w-8 h-8 p-[.3rem] cursor-pointer text-neutral-500"
-          onClick={handleDeletePost}
+          onClick={openPostSettings}
         />
       </div>
       <div className="relative flex items-center justify-center bg-slate-100">
@@ -132,10 +137,12 @@ export default function Post({
       <div className="flex items-center justify-between w-full px-4 py-3 text-2xl lg:px-6">
         <div className="flex space-x-6">
           {postLiked ? (
-            <FaHeart
-              className="text-red-600 cursor-pointer"
+            <div
               onClick={handleLike}
-            />
+              className="flex items-center justify-center w-6 h-6"
+            >
+              <FaHeart className="text-red-600 cursor-pointer" />
+            </div>
           ) : (
             <FiHeart className="cursor-pointer" onClick={handleLike} />
           )}
