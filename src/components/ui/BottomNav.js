@@ -18,7 +18,7 @@ export default function BottomNav({ avatarsArray }) {
         }
       });
     }
-  }, [avatarsArray]);
+  }, [avatarsArray, user]);
 
   return (
     <div className="fixed w-full max-w-2xl bottom-0 pb-4 bg-slate-50 border rounded-t-md z-[20]">

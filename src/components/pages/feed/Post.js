@@ -24,8 +24,6 @@ export default function Post({
   const [postLikes, setPostLikes] = useState(likes);
   const [user, setUser] = useState(username);
   const [postLiked, setPostLiked] = useState(false);
-  const [isUsersPost, setIsUsersPost] = useState(false);
-
   const [likesModalOpen, setLikesModalOpen] = useState(false);
   const [usersAvatar, setUsersAvatar] = useState();
 
@@ -57,7 +55,8 @@ export default function Post({
         }
       });
     }
-  }, []);
+    return;
+  }, [avatarsArray, user, username]);
 
   function handleLike() {
     let db = firebase.firestore();

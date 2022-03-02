@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import firebase from "firebase/compat/app";
 import { useNavigate } from "react-router-dom";
-import Avatar from "../modals/Avatar";
 
 export default function SignInPage() {
   const { login } = useAuth();
@@ -43,7 +42,6 @@ export default function SignInPage() {
 
   return (
     <div className="fixed z-10 flex flex-col items-center justify-center w-screen h-screen px-5 bg-slate-50">
-
       <div className="flex flex-col items-center justify-center w-[90%] max-w-96 animate-slideInRight">
         <h1 className="mb-4 text-5xl transition-all duration-300 font-logofont">
           Instalike

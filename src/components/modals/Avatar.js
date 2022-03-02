@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
 import firebase from "firebase/compat/app";
 import "firebase/storage";

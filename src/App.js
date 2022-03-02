@@ -30,7 +30,7 @@ function App() {
   useEffect(() => {
     if (avatarsArray) {
       let avatarUsers = [];
-      avatarsArray.map((avatar) => {
+      avatarsArray.forEach((avatar) => {
         avatarUsers.push(avatar.details.username);
         setAvatarUsers([...avatarUsers, avatar.details.username]);
       });
