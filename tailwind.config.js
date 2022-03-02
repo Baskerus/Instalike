@@ -39,7 +39,7 @@ module.exports = {
         slideInLeftFast: "slideInLeft .3s",
         slideInTopFaster: "slideInTop .15s",
         slideInTopFast: "slideInTop .25s",
-        slideInTop: "slideInTop .4s",
+        slideInTop: "slideInTop .3s",
         slideInBottom: "slideInBottom .45s",
         slideInBottomFast: "slideInBottom .35s",
         slideInBottomFaster: "slideInBottom .15s",

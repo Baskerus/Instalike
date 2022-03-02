@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
+import { MdClose, MdReportGmailerrorred } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import { BiBookmark } from "react-icons/bi";
 import firebase from "firebase/compat/app";
@@ -9,6 +11,7 @@ import { db } from "../../../firebase";
 import PostTime from "./PostTime";
 import PostLikes from "../../modals/PostLikes";
 import Comments from "./Comments";
+import Settings from "../../modals/Settings";
 
 export default function Post({
   username,
@@ -27,6 +30,28 @@ export default function Post({
   const [likesModalOpen, setLikesModalOpen] = useState(false);
   const [usersAvatar, setUsersAvatar] = useState();
   const [postSettingsOpen, setPostSettingsOpen] = useState(false);
+  const wrapperRef = useRef(null);
+  useOutsideClick(wrapperRef);
+
+  function useOutsideClick(ref) {
+    useEffect(() => {
+      /**
+       * Alert if clicked on outside of element
+       */
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setPostSettingsOpen(false);
+        }
+      }
+
+      // Bind the event listener
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  }
 
   useEffect(() => {
     // Checks if user has already liked the post
@@ -100,7 +125,7 @@ export default function Post({
   }
 
   return (
-    <div className="relative flex flex-col w-full pb-16 my-6 text-sm border rounded-md shadow-md bg-slate-50 shadow-slate-100">
+    <div className="relative flex flex-col w-full pb-16 my-6 text-sm transition-none duration-200 border rounded-md shadow-md bg-slate-50 shadow-slate-100">
       <div className="flex items-center justify-between w-full p-4 lg:p-6">
         <div className="flex items-center justify-center space-x-2">
           <div className="z-10 flex w-8 h-8 overflow-hidden border rounded-full cursor-pointer">
@@ -118,10 +143,32 @@ export default function Post({
           </div>
           <span className="font-bold lowercase">{username}</span>
         </div>
-        <BsThreeDotsVertical
-          className="w-8 h-8 p-[.3rem] cursor-pointer text-neutral-500"
-          onClick={openPostSettings}
-        />
+        <div>
+          {!postSettingsOpen && (
+            <BsThreeDotsVertical
+              className="w-8 h-8 p-[.3rem] cursor-pointer hover:scale-150 hover:text-slate-700 hover:rotate-90 transition-all duration-300"
+              onClick={openPostSettings}
+            />
+          )}
+
+          {postSettingsOpen && (
+            <Settings>
+              <div ref={wrapperRef}>
+                <li className="flex items-center p-4 space-x-2 font-sans h-14 animate-slideInTop hover:bg-slate-100">
+                  <MdReportGmailerrorred className="text-2xl" />
+                  <span>Report</span>
+                </li>
+                <li
+                  onClick={handleDeletePost}
+                  className="flex items-center p-4 space-x-2 h-14 animate-slideInTopFast hover:bg-slate-100"
+                >
+                  <MdDeleteOutline className="text-2xl" />
+                  <span>Delete</span>
+                </li>
+              </div>
+            </Settings>
+          )}
+        </div>
       </div>
       <div className="relative flex items-center justify-center bg-slate-100">
         <img
@@ -141,10 +188,13 @@ export default function Post({
               onClick={handleLike}
               className="flex items-center justify-center w-6 h-6"
             >
-              <FaHeart className="text-red-600 cursor-pointer" />
+              <FaHeart className="text-red-600 transition-all duration-200 cursor-pointer md:hover:scale-125 md:hover:text-red-200" />
             </div>
           ) : (
-            <FiHeart className="cursor-pointer" onClick={handleLike} />
+            <FiHeart
+              className="transition-all duration-200 cursor-pointer md:hover:scale-125 md:hover:text-red-600"
+              onClick={handleLike}
+            />
           )}
           <IoPaperPlaneOutline />
         </div>

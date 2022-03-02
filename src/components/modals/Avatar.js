@@ -57,7 +57,7 @@ function Avatar({ setShowAvatar, avatarsArray }) {
       <div className="relative flex flex-col items-center justify-center w-64 p-4 pb-8 space-y-4 text-sm border border-b-0 rounded-lg rounded-b-none bg-slate-50 text-slate-500 animate-slideInBottomFast">
         <MdClose
           onClick={() => setShowAvatar(false)}
-          className="absolute top-0 right-0 w-8 h-8 m-2 cursor-pointer text-slate-400"
+          className="absolute top-0 right-0 w-8 h-8 p-1 m-2 cursor-pointer text-slate-400"
         />
         <span className="animate-slideInBottomFaster">Choose an avatar</span>
         <label className="flex items-center justify-center w-48 h-10 text-white truncate bg-blue-400 rounded-md shadow-lg cursor-pointer animate-slideInBottomFast">
