@@ -20,7 +20,8 @@ export default function SignUpPage() {
     }
   });
 
-  async function handleSignUp() {
+  async function handleSignUp(e) {
+    e.preventDefault();
     try {
       await signup(email, password, username);
     } catch {
@@ -61,13 +62,13 @@ export default function SignUpPage() {
             }}
           ></input>
           <span className="w-full ">
-            <Link
-              to="/sign-up"
-              className="flex items-center justify-center mt-6 w-full h-10 max-w-sm  text-white bg-blue-500 rounded-md shadow-md"
+            <button
+              type="submit"
+              className="flex items-center justify-center w-full h-10 max-w-sm mt-6 text-white bg-blue-500 rounded-md shadow-md"
               onClick={handleSignUp}
             >
               Sign Up
-            </Link>
+            </button>
           </span>
         </form>
       </div>

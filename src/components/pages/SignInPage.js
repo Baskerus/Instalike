@@ -76,6 +76,7 @@ export default function SignInPage() {
             </div>
             <button
               to="/feed"
+              type="submit"
               className="flex items-center justify-center w-full h-10 max-w-sm text-white bg-blue-500 rounded-md shadow-md"
               onClick={handleSignInButton}
             >
