@@ -14,4 +14,4 @@ Tailwind and Firebase.
 
 Latest Screenshot:
 
-![project screenshot](https://i.ibb.co/HdBSMG6/isntacloness.jpg)
+![project screenshot](https://i.ibb.co/j6VJBmq/isntacloness.jpg)
