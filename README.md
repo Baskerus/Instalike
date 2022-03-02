@@ -7,7 +7,10 @@ Tailwind and Firebase.
 
 ## Progress...
 
-25 Feb. -  Thinking of soon linking a live version since user authentication, post and like functionality is basically done :OO
+3. Mar. - Comments functionality, avatar upload and display and some animations finished
+25. Feb. -  Thinking of linking a live version soon since user authentication, post and like functionality is basically done
+22. Feb - Main markup and styles done 
+20 Feb. - Project started
 
 Latest Screenshot:
 
