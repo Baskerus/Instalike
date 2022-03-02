@@ -26,25 +26,27 @@ export default function BottomNav({ avatarsArray }) {
         <MdHomeFilled className="z-10" />
         <FiSearch className="z-10" />
         <FiHeart className="z-10" />
-
-        {usersAvatar ? (
-          <div
-            onClick={() => setShowAvatar(!showAvatar)}
-            className="flex w-8 h-8 border rounded-full overflow-hidden cursor-pointer z-10"
-          >
-            <img
-              alt="user avatar"
-              className="w-full object-cover"
-              src={usersAvatar}
-            ></img>
-          </div>
-        ) : (
-          <div
-            onClick={() => setShowAvatar(!showAvatar)}
-            className="w-6 h-6 bg-slate-600 rounded-full cursor-pointer"
-          ></div>
-        )}
-
+        <div className="flex w-8 h-8 border rounded-full overflow-hidden cursor-pointer z-10">
+          {usersAvatar ? (
+            <div
+              onClick={() => setShowAvatar(!showAvatar)}
+              className="flex w-8 h-8 border rounded-full overflow-hidden cursor-pointer z-10"
+            >
+              <img
+                alt="user avatar"
+                className="w-full object-cover"
+                src={usersAvatar}
+              ></img>
+            </div>
+          ) : (
+            <span
+              onClick={() => setShowAvatar(!showAvatar)}
+              className="flex items-center justify-center w-full h-full text-xl uppercase z-10 select-none"
+            >
+              {user && user.charAt(0)}
+            </span>
+          )}
+        </div>
         {showAvatar && (
           <Avatar setShowAvatar={setShowAvatar} avatarsArray={avatarsArray} />
         )}

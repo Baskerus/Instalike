@@ -95,25 +95,22 @@ export default function Post({
     setLikesModalOpen(!likesModalOpen);
   }
 
-  /* <div
-            className="flex w-8 h-8 border rounded-full overflow-hidden cursor-pointer z-10"
-          >
-            <img
-              alt="user avatar"
-              className="w-full object-cover"
-              src={usersAvatar}
-            ></img>
-          </div> */
   return (
     <div className="relative flex flex-col w-full pb-16 my-6 text-sm border rounded-md shadow-md bg-slate-50 shadow-slate-100">
       <div className="flex items-center justify-between w-full p-4 lg:p-6">
         <div className="flex items-center justify-center space-x-2">
           <div className="flex w-8 h-8 border rounded-full overflow-hidden cursor-pointer z-10">
-            <img
-              alt="user avatar"
-              className="w-full object-cover"
-              src={usersAvatar}
-            ></img>
+            {usersAvatar ? (
+              <img
+                alt="user avatar"
+                className="w-full object-cover"
+                src={usersAvatar}
+              ></img>
+            ) : (
+              <span className="flex items-center justify-center w-full h-full text-xl uppercase">
+                {username.charAt(0)}
+              </span>
+            )}
           </div>
           <span className="font-bold lowercase">{username}</span>
         </div>

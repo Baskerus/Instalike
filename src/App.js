@@ -73,6 +73,7 @@ function App() {
                   <BottomNav
                     avatarUsers={avatarUsers}
                     avatarsArray={avatarsArray}
+                    username={username}
                   />
                 </div>
               }
