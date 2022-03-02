@@ -4,7 +4,7 @@ import firebase from "firebase/compat/app";
 import "firebase/storage";
 import { db } from "../../firebase";
 
-function Avatar({ setShowAvatar }) {
+function Avatar({ setShowAvatar, avatarsArray }) {
   const [avatar, setAvatar] = useState();
 
   const storage = firebase.storage();
@@ -17,29 +17,39 @@ function Avatar({ setShowAvatar }) {
   }
 
   function handleUpload() {
-    try {
-      storage
-        .ref(`/avatars/${avatar.name}`)
-        .put(avatar)
-        .then(() => {
-          storage
-            .ref("/avatars")
-            .child(avatar.name)
-            .getDownloadURL()
-            .then((url) => {
-              // Post image to the database
-              db.collection("avatars").add({
-                imageUrl: url,
-                username: user.displayName,
+    let avatarUsers = [];
+    avatarsArray.forEach((avatar) => {
+      avatarUsers.push(avatar.details.username);
+    });
+
+    if (avatar && !avatarUsers.includes(user.displayName)) {
+      try {
+        storage
+          .ref(`/avatars/${avatar.name}`)
+          .put(avatar)
+          .then(() => {
+            storage
+              .ref("/avatars")
+              .child(avatar.name)
+              .getDownloadURL()
+              .then((url) => {
+                // Post image to the database
+                db.collection("avatars").add({
+                  imageUrl: url,
+                  username: user.displayName,
+                });
+                console.log("Image uploaded to DB");
               });
-              console.log("Image uploaded to DB");
-            });
-          console.log("Uploaded successfully");
-        });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setShowAvatar(false);
+            console.log("Uploaded successfully");
+          });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setShowAvatar(false);
+      }
+    } else {
+      console.log("Prevented avatar upload");
+      return;
     }
   }
   return (
@@ -50,7 +60,7 @@ function Avatar({ setShowAvatar }) {
           className="absolute top-0 right-0 w-8 h-8 m-2 cursor-pointer text-slate-400"
         />
         <span className="animate-slideInBottomFaster">
-          Choose a profile image
+          Choose an avatar
         </span>
         <label className="flex items-center justify-center w-48 h-10 text-white truncate bg-blue-400 rounded-md shadow-lg cursor-pointer animate-slideInBottomFast">
           {avatar ? (

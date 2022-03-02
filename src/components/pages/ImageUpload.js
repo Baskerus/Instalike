@@ -84,7 +84,7 @@ export default function ImageUpload() {
 
         {image && (
           <div className="flex flex-col items-center justify-center w-full  animate-fadeIn">
-            <label className="flex items-center justify-center max-w-xs w-full h-10 text-sm border bg-white border-blue-500 text-blue-500 rounded-md shadow-md cursor-pointer overflow-hidden truncate">
+            <label className="flex items-center justify-center max-w-xs w-full h-10 text-sm border bg-white focus:border-blue-500 text-blue-500 rounded-md shadow-md cursor-pointer overflow-hidden truncate">
               <span className="flex items-center justify-center w-full p-4">
                 {image.name}
               </span>

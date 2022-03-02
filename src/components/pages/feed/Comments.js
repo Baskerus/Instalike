@@ -13,11 +13,10 @@ function Comments({ id, comments }) {
 
   useEffect(() => {
     if (comments) {
-      console.log("Rendered comments...");
       setCommentsArray(comments);
     }
     return;
-  }, []);
+  }, [comments]);
 
   async function handlePostComment() {
     if (commentsArray.length > 10) {
@@ -41,7 +40,7 @@ function Comments({ id, comments }) {
   }
 
   function onEnterPress(e) {
-    if (e.keyCode == 13 && e.shiftKey == false) {
+    if (e.keyCode === 13 && e.shiftKey === false) {
       e.preventDefault();
       handlePostComment();
     }

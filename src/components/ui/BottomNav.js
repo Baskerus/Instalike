@@ -18,10 +18,10 @@ export default function BottomNav({ avatarsArray }) {
         }
       });
     }
-  }, []);
+  }, [avatarsArray]);
 
   return (
-    <div className="fixed w-full max-w-2xl bottom-0 pb-4 bg-slate-50 border rounded-t-md">
+    <div className="fixed w-full max-w-2xl bottom-0 pb-4 bg-slate-50 border rounded-t-md z-[20]">
       <div className=" flex items-center justify-between px-6 pt-4 text-2xl z-10">
         <MdHomeFilled className="z-10" />
         <FiSearch className="z-10" />
@@ -45,7 +45,9 @@ export default function BottomNav({ avatarsArray }) {
           ></div>
         )}
 
-        {showAvatar && <Avatar setShowAvatar={setShowAvatar} />}
+        {showAvatar && (
+          <Avatar setShowAvatar={setShowAvatar} avatarsArray={avatarsArray} />
+        )}
       </div>
     </div>
   );
