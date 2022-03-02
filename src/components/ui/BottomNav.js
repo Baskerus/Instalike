@@ -11,7 +11,6 @@ export default function BottomNav({ avatarsArray }) {
   const [showAvatar, setShowAvatar] = useState(false);
 
   useEffect(() => {
-    console.log("bNav rendered");
     if (avatarsArray) {
       avatarsArray.forEach((avatar) => {
         if (avatar.details.username === user) {
@@ -19,7 +18,7 @@ export default function BottomNav({ avatarsArray }) {
         }
       });
     }
-  });
+  }, []);
 
   return (
     <div className="fixed w-full max-w-2xl bottom-0 pb-4 bg-slate-50 border rounded-t-md">

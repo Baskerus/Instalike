@@ -17,24 +17,30 @@ function Avatar({ setShowAvatar }) {
   }
 
   function handleUpload() {
-    storage
-      .ref(`/avatars/${avatar.name}`)
-      .put(avatar)
-      .then(() => {
-        storage
-          .ref("/avatars")
-          .child(avatar.name)
-          .getDownloadURL()
-          .then((url) => {
-            // Post image to the database
-            db.collection("avatars").add({
-              imageUrl: url,
-              username: user.displayName,
+    try {
+      storage
+        .ref(`/avatars/${avatar.name}`)
+        .put(avatar)
+        .then(() => {
+          storage
+            .ref("/avatars")
+            .child(avatar.name)
+            .getDownloadURL()
+            .then((url) => {
+              // Post image to the database
+              db.collection("avatars").add({
+                imageUrl: url,
+                username: user.displayName,
+              });
+              console.log("Image uploaded to DB");
             });
-            console.log("Image uploaded to DB");
-          });
-        console.log("Uploaded successfully");
-      });
+          console.log("Uploaded successfully");
+        });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setShowAvatar(false);
+    }
   }
   return (
     <div className="absolute right-0 top-[-14rem] flex items-center justify-center text-sm  animate-fadeIn z-[2]">
@@ -63,7 +69,7 @@ function Avatar({ setShowAvatar }) {
           onClick={handleUpload}
           className="flex items-center justify-center w-48 h-10 text-white bg-blue-500 rounded-md shadow-lg animate-slideInBottom"
         >
-          Upload and sign up
+          Upload avatar
         </button>
       </div>
     </div>

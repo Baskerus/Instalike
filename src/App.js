@@ -63,7 +63,11 @@ function App() {
                 <div className="relative flex items-center justify-center w-screen h-full">
                   <Navbar username={username} />
                   <Routes>
-                    <Route exact path="/" element={<Feed />}></Route>
+                    <Route
+                      exact
+                      path="/"
+                      element={<Feed avatarsArray={avatarsArray} />}
+                    ></Route>
                     <Route exact path="/user" element={<UserProfile />}></Route>
                   </Routes>
                   <BottomNav

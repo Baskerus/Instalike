@@ -47,7 +47,7 @@ function PostTime({ timestamp }) {
         setPostTime();
         setTime(Date.now());
       };
-    } else
+    } 
       return () => {
         clearInterval(interval);
       };
@@ -55,5 +55,7 @@ function PostTime({ timestamp }) {
 
   return <div className="text-xs text-neutral-400">{postTime}</div>;
 }
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx PROBLEMS WITH LOW BANDWIDTH MOBILE CONNECTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 export default PostTime;
