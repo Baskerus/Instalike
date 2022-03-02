@@ -1,4 +1,4 @@
-# Instaclone the Instagram clone
+# Instalike the Instagram clone
 
 ## About
 
