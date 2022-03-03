@@ -3,7 +3,6 @@ import { CgAddR } from "react-icons/cg";
 import { RiMenuFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import Settings from "../modals/Settings";
-import { MdClose } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { FiLogOut } from "react-icons/fi";
 import { useAuth } from "../../contexts/AuthContext";
@@ -40,14 +39,14 @@ export default function Navbar({ username }) {
       {username}
       <div className="flex space-x-6 text-2xl">
         <Link to="/upload">
-          <CgAddR className="transition-all duration-200 hover:scale-125 hover:text-slate-500" />
+          <CgAddR className="transition-all duration-200 hover:scale-125 hover:text-neutral-400" />
         </Link>
-        {!settingsOpen && (
-          <RiMenuFill
-            className="z-20 transition-all duration-200 cursor-pointer hover:scale-125 hover:text-slate-500"
-            onClick={() => setSettingsOpen(!settingsOpen)}
-          />
-        )}
+        <RiMenuFill
+          className={`z-20 transition-all duration-200 cursor-pointer hover:scale-125 hover:text-neutral-400 ${
+            settingsOpen && "opacity-0 z-0"
+          }`}
+          onClick={() => setSettingsOpen(!settingsOpen)}
+        />
       </div>
       {settingsOpen && (
         <Settings>

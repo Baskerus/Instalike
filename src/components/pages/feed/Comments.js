@@ -47,7 +47,7 @@ function Comments({ id, comments }) {
   }
 
   return (
-    <div>
+    <div className="">
       {showError && (
         <Error
           error={
@@ -56,7 +56,7 @@ function Comments({ id, comments }) {
           setShowError={setShowError}
         />
       )}
-      <div className="absolute bottom-0 left-0 flex w-full ">
+      <div className="absolute h-fit bottom-0 left-0 flex w-full">
         <textarea
           ref={textarea}
           maxLength={120}
@@ -65,19 +65,19 @@ function Comments({ id, comments }) {
             onEnterPress(e);
           }}
           placeholder="Add a comment..."
-          className="w-full h-12 px-3 py-3 text-sm border-t resize-none focus:outline-slate-300 placeholder:text-slate-300"
+          className=" w-full h-10 px-3 focus:h-12 focus:py-3 py-[11px] focus:text-sm border-t resize-none focus:outline-slate-300 placeholder:text-slate-300 text-xs transition-all duration-200"
         ></textarea>
         {commentContent ? (
           <button
             onClick={handlePostComment}
-            className={`flex items-center justify-center text-sky-400 text-sm p-3 px-5 border-x border-t bg-neutral-50 cursor-pointer`}
+            className={`flex items-center justify-center text-sky-400 text-sm  px-5 border-x border-t bg-neutral-50 cursor-pointer hover:bg-slate-100 transition-all duration-200 hover:text-sky-600 hover:shadow-sm`}
           >
             Post
           </button>
         ) : (
           <button
             disabled
-            className={`flex items-center justify-center text-sky-200 text-sm p-3 px-5 border-x border-t bg-neutral-50`}
+            className={`flex items-center justify-center text-sky-200 text-sm  px-5 border-x border-t bg-neutral-50`}
           >
             Post
           </button>

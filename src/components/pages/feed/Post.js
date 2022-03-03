@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
-import { MdClose, MdReportGmailerrorred } from "react-icons/md";
+import { MdReportGmailerrorred } from "react-icons/md";
 import { MdDeleteOutline } from "react-icons/md";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import { BiBookmark } from "react-icons/bi";
@@ -146,7 +146,7 @@ export default function Post({
         <div>
           {!postSettingsOpen && (
             <BsThreeDotsVertical
-              className="w-8 h-8 p-[.3rem] cursor-pointer hover:scale-150 hover:text-slate-700 hover:rotate-90 transition-all duration-300"
+              className="w-8 h-8 p-[.3rem] cursor-pointer hover:scale-150 hover:text-neutral-400 transition-all duration-300"
               onClick={openPostSettings}
             />
           )}
