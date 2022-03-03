@@ -13,19 +13,19 @@ module.exports = {
       },
       keyframes: {
         slideInRight: {
-          "0%": { transform: "translateX(-100px)", opacity: "0" },
+          "0%": { transform: "translateX(-100px)", opacity: "0.5" },
           "100%": { transform: "translateX(0px)", opacity: "1" },
         },
         slideInLeft: {
-          "0%": { transform: "translateX(100px)", opacity: "0" },
+          "0%": { transform: "translateX(100px)", opacity: "0.5" },
           "100%": { transform: "translateX(0px)", opacity: "1" },
         },
         slideInTop: {
-          "0%": { transform: "translateY(-100px)", opacity: "0" },
+          "0%": { transform: "translateY(-20px)", opacity: "0.5" },
           "100%": { transform: "translateY(0px)", opacity: "1" },
         },
         slideInBottom: {
-          "0%": { transform: "translateY(100px)", opacity: "0" },
+          "0%": { transform: "translateY(40px)", opacity: "0.5" },
           "100%": { transform: "translateY(0px)", opacity: "1" },
         },
         fadeIn: {
@@ -44,7 +44,7 @@ module.exports = {
         slideInBottom: "slideInBottom .45s",
         slideInBottomFast: "slideInBottom .35s",
         slideInBottomFaster: "slideInBottom .15s",
-        fadeIn: "fadeIn 0.3s",
+        fadeIn: "fadeIn .3s",
         fadeInSlow: "fadeIn 0.6s",
       },
       transitionTimingFunction: {

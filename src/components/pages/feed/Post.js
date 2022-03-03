@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import { MdReportGmailerrorred } from "react-icons/md";
@@ -29,7 +28,6 @@ export default function Post({
   const [postLiked, setPostLiked] = useState(false);
   const [likesModalOpen, setLikesModalOpen] = useState(false);
   const [usersAvatar, setUsersAvatar] = useState();
-  const [postSettingsOpen, setPostSettingsOpen] = useState(false);
   const wrapperRef = useRef(null);
   const currentUser = firebase.auth().currentUser.displayName;
   useOutsideClick(wrapperRef);
@@ -41,7 +39,6 @@ export default function Post({
        */
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
-          setPostSettingsOpen(false);
         }
       }
 
@@ -106,7 +103,7 @@ export default function Post({
   }
 
   function handleDeletePost() {
-    if (username === currentUser) {
+    if (window.confirm("Are you sure you want to delete the post?")) {
       db.collection("posts")
         .doc(id)
         .delete()
@@ -116,11 +113,7 @@ export default function Post({
         .catch((error) => {
           console.log("Error removing document: ", error);
         });
-    } else return;
-  }
-
-  function openPostSettings() {
-    setPostSettingsOpen(!postSettingsOpen);
+    }
   }
 
   async function handleViewLikes() {
@@ -151,43 +144,15 @@ export default function Post({
           <span className="font-bold lowercase">{username}</span>
         </div>
         <div ref={wrapperRef}>
-          {!postSettingsOpen ? (
-            <BsThreeDotsVertical
-              className="w-8 h-8 p-[.3rem] cursor-pointer  duration-300"
-              onClick={openPostSettings}
+          {username === currentUser && (
+            <MdDeleteOutline
+              onClick={handleDeletePost}
+              className="w-9 h-9 p-1 cursor-pointer text-slate-700 hover:text-neutral-500 hover:scale-110 transition-all duration-200"
             />
-          ) : (
-            <BsThreeDotsVertical
-              onClick={openPostSettings}
-              className="w-8 h-8 p-[.3rem] cursor-pointer transition-all duration-300 "
-            />
-          )}
-
-          {postSettingsOpen && (
-            <Settings>
-              <div className="pt-6">
-                <li
-                  onClick={handlePrompt}
-                  className="flex items-center p-4 space-x-2 font-sans h-14  border-l animate-slideInTop hover:bg-slate-100 transition-all duration-200"
-                >
-                  <MdReportGmailerrorred className="text-2xl" />
-                  <span className="select-none">Report</span>
-                </li>
-                {username === currentUser && (
-                  <li
-                    onClick={handleDeletePost}
-                    className="flex items-center p-4 space-x-2 h-14 border-l animate-slideInTopFast hover:bg-slate-100 transition-all duration-200"
-                  >
-                    <MdDeleteOutline className="text-2xl" />
-                    <span className="select-none">Delete</span>
-                  </li>
-                )}
-              </div>
-            </Settings>
           )}
         </div>
       </div>
-      <div className="relative flex items-center justify-center bg-slate-100">
+      <div className="relative flex items-center justify-center bg-slate-50">
         <img
           alt=""
           src={image}

@@ -6,12 +6,15 @@ import Settings from "../modals/Settings";
 import { IoSettingsOutline } from "react-icons/io5";
 import { FiLogOut } from "react-icons/fi";
 import { useAuth } from "../../contexts/AuthContext";
+import ImageUpload from "../pages/ImageUpload";
 
 export default function Navbar({ username }) {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [uploadOpen, setUploadOpen] = useState(false);
   const { logout } = useAuth();
   const wrapperRef = useRef(null);
-  useOutsideClick(wrapperRef);
+  const wrapperTwo = useRef(null);
+  useOutsideClick(wrapperRef, wrapperTwo);
 
   function useOutsideClick(ref) {
     useEffect(() => {
@@ -21,6 +24,7 @@ export default function Navbar({ username }) {
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
           setSettingsOpen(false);
+          setUploadOpen(false);
         }
       }
 
@@ -38,18 +42,26 @@ export default function Navbar({ username }) {
       <span className="text-4xl font-logofont">Instalike</span>
       {username}
       <div className="flex space-x-6 text-2xl">
-        <Link to="/upload">
-          <CgAddR className="transition-all duration-200 hover:scale-110 hover:text-neutral-400 z-[20]" />
-        </Link>
+        <CgAddR
+          onClick={() => {
+            setUploadOpen(true);
+          }}
+          className="transition-all duration-200 hover:scale-110 hover:text-neutral-400 z-[20]"
+        />
         {!settingsOpen ? (
           <RiMenuFill
-            className="z-[30] transition-all duration-200 cursor-pointer hover:scale-110 hover:text-slate-500"
+            className="z-40 transition-all duration-200 cursor-pointer hover:scale-110 hover:text-slate-500"
             onClick={() => setSettingsOpen(!settingsOpen)}
           />
         ) : (
           <RiMenuFill className="transition-all duration-200 cursor-pointer hover:scale-110 hover:text-slate-500 opacity-0 z-0 pointer-events-none" />
         )}
       </div>
+      {uploadOpen && (
+        <div className="absolute top-0 right-0" ref={wrapperRef}>
+          <ImageUpload setUploadOpen={setUploadOpen} />
+        </div>
+      )}
       {settingsOpen && (
         <Settings>
           <div ref={wrapperRef}>

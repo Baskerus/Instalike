@@ -49,7 +49,7 @@ export default function Feed({ avatarsArray }) {
           <Loader />
         </div>
       ) : (
-        <div className="w-full max-w-2xl pb-32 mt-16 space-y-6 overflow-hidden md:space-y-10 lg:space-y-16">
+        <div className="w-full max-w-2xl pb-32 mt-14 space-y-6 overflow-hidden md:space-y-10 lg:space-y-16">
           {user &&
             posts.map(({ post, id }) => {
               return (

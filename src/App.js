@@ -27,7 +27,7 @@ function App() {
       );
     });
   }, []);
-  
+
   useEffect(() => {
     if (avatarsArray) {
       let avatarUsers = [];
@@ -49,7 +49,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <div className="h-full min-h-screen overflow-hidden bg-slate-100 text-slate-800">
+        <div className="h-full min-h-screen overflow-hidden bg-slate-50 text-slate-800">
           <Routes>
             <Route exact path="/" element={<SignInPage />}></Route>
             <Route
