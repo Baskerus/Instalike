@@ -69,7 +69,7 @@ export default function ImageUpload({ setUploadOpen }) {
     }
   };
   return (
-    <div className="absolute flex flex-col top-12 right-0 p-6 min-w-[240px] max-w-[19rem] w-[100vw] h-[410px] items-center justify-center bg-slate-50 rounded-t-none rounded-xl space-y-2 shadow-md animate-slideInTop z-30">
+    <div className="absolute flex flex-col top-14 right-0 p-6 min-w-[240px] max-w-[19rem] w-[100vw] h-[410px] items-center justify-center bg-slate-50 rounded-t-none rounded-xl space-y-2 shadow-md animate-slideInTop z-30">
       <MdClose
         onClick={() => setUploadOpen(false)}
         className="absolute top-0 right-0 w-12 h-12 p-2 m-2 mr-0 cursor-pointer text-slate-600 hover:text-neutral-400 hover:scale-110 transition-all duration-300"

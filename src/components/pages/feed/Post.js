@@ -120,7 +120,7 @@ export default function Post({
     setLikesModalOpen(!likesModalOpen);
   }
 
-  function handlePrompt() {
+  function handleAlert() {
     alert("Oops! Feature not yet implemented.");
   }
 
@@ -178,9 +178,9 @@ export default function Post({
               onClick={handleLike}
             />
           )}
-          <IoPaperPlaneOutline onClick={handlePrompt} />
+          <IoPaperPlaneOutline onClick={handleAlert} />
         </div>
-        <BiBookmark onClick={handlePrompt} />
+        <BiBookmark onClick={handleAlert} />
       </div>
 
       <div className="flex flex-col px-4 select-none lg:px-6">

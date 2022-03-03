@@ -13,20 +13,20 @@ module.exports = {
       },
       keyframes: {
         slideInRight: {
-          "0%": { transform: "translateX(-100px)", opacity: "0.5" },
-          "100%": { transform: "translateX(0px)", opacity: "1" },
+          "0%": { transform: "translateX(-100px)" },
+          "100%": { transform: "translateX(0px)" },
         },
         slideInLeft: {
-          "0%": { transform: "translateX(100px)", opacity: "0.5" },
-          "100%": { transform: "translateX(0px)", opacity: "1" },
+          "0%": { transform: "translateX(100px)" },
+          "100%": { transform: "translateX(0px)" },
         },
         slideInTop: {
-          "0%": { transform: "translateY(-20px)", opacity: "0.5" },
-          "100%": { transform: "translateY(0px)", opacity: "1" },
+          "0%": { transform: "translateY(-20px)" },
+          "100%": { transform: "translateY(0px)" },
         },
         slideInBottom: {
-          "0%": { transform: "translateY(40px)", opacity: "0.5" },
-          "100%": { transform: "translateY(0px)", opacity: "1" },
+          "0%": { transform: "translateY(40px)" },
+          "100%": { transform: "translateY(0px)" },
         },
         fadeIn: {
           "0%": { opacity: "0" },

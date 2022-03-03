@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { CgAddR } from "react-icons/cg";
 import { RiMenuFill } from "react-icons/ri";
-import { Link } from "react-router-dom";
 import Settings from "../modals/Settings";
 import { IoSettingsOutline } from "react-icons/io5";
 import { FiLogOut } from "react-icons/fi";
@@ -13,8 +12,7 @@ export default function Navbar({ username }) {
   const [uploadOpen, setUploadOpen] = useState(false);
   const { logout } = useAuth();
   const wrapperRef = useRef(null);
-  const wrapperTwo = useRef(null);
-  useOutsideClick(wrapperRef, wrapperTwo);
+  useOutsideClick(wrapperRef);
 
   function useOutsideClick(ref) {
     useEffect(() => {
@@ -42,12 +40,15 @@ export default function Navbar({ username }) {
       <span className="text-4xl font-logofont">Instalike</span>
       {username}
       <div className="flex space-x-6 text-2xl">
-        <CgAddR
-          onClick={() => {
-            setUploadOpen(true);
-          }}
-          className="transition-all duration-200 hover:scale-110 hover:text-neutral-400 z-[20]"
-        />
+        {!uploadOpen && (
+          <CgAddR
+            onClick={() => {
+              setUploadOpen(true);
+            }}
+            className="transition-all duration-300 hover:scale-110 hover:text-neutral-400 z-[20] cursor-pointer"
+          />
+        )}
+
         {!settingsOpen ? (
           <RiMenuFill
             className="z-40 transition-all duration-200 cursor-pointer hover:scale-110 hover:text-slate-500"
