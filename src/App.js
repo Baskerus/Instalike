@@ -27,6 +27,7 @@ function App() {
       );
     });
   }, []);
+  
   useEffect(() => {
     if (avatarsArray) {
       let avatarUsers = [];

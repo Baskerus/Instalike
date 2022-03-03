@@ -31,6 +31,7 @@ export default function Post({
   const [usersAvatar, setUsersAvatar] = useState();
   const [postSettingsOpen, setPostSettingsOpen] = useState(false);
   const wrapperRef = useRef(null);
+  const currentUser = firebase.auth().currentUser.displayName;
   useOutsideClick(wrapperRef);
 
   function useOutsideClick(ref) {
@@ -105,15 +106,17 @@ export default function Post({
   }
 
   function handleDeletePost() {
-    db.collection("posts")
-      .doc(id)
-      .delete()
-      .then(() => {
-        console.log("Post deleted");
-      })
-      .catch((error) => {
-        console.log("Error removing document: ", error);
-      });
+    if (username === currentUser) {
+      db.collection("posts")
+        .doc(id)
+        .delete()
+        .then(() => {
+          console.log("Post deleted");
+        })
+        .catch((error) => {
+          console.log("Error removing document: ", error);
+        });
+    } else return;
   }
 
   function openPostSettings() {
@@ -122,6 +125,10 @@ export default function Post({
 
   async function handleViewLikes() {
     setLikesModalOpen(!likesModalOpen);
+  }
+
+  function handlePrompt() {
+    alert("Oops! Feature not yet implemented.");
   }
 
   return (
@@ -152,24 +159,29 @@ export default function Post({
           ) : (
             <BsThreeDotsVertical
               onClick={openPostSettings}
-              className="w-8 h-8 p-[.3rem] cursor-pointer transition-all duration-300"
+              className="w-8 h-8 p-[.3rem] cursor-pointer transition-all duration-300 "
             />
           )}
 
           {postSettingsOpen && (
-            <Settings borderL={0}>
+            <Settings>
               <div className="pt-6">
-                <li className="flex items-center p-4 space-x-2 font-sans h-14 animate-slideInTop hover:bg-slate-100">
-                  <MdReportGmailerrorred className="text-2xl" />
-                  <span>Report</span>
-                </li>
                 <li
-                  onClick={handleDeletePost}
-                  className="flex items-center p-4 space-x-2 h-14 animate-slideInTopFast hover:bg-slate-100"
+                  onClick={handlePrompt}
+                  className="flex items-center p-4 space-x-2 font-sans h-14  border-l animate-slideInTop hover:bg-slate-100 transition-all duration-200"
                 >
-                  <MdDeleteOutline className="text-2xl" />
-                  <span>Delete</span>
+                  <MdReportGmailerrorred className="text-2xl" />
+                  <span className="select-none">Report</span>
                 </li>
+                {username === currentUser && (
+                  <li
+                    onClick={handleDeletePost}
+                    className="flex items-center p-4 space-x-2 h-14 border-l animate-slideInTopFast hover:bg-slate-100 transition-all duration-200"
+                  >
+                    <MdDeleteOutline className="text-2xl" />
+                    <span className="select-none">Delete</span>
+                  </li>
+                )}
               </div>
             </Settings>
           )}
@@ -201,9 +213,9 @@ export default function Post({
               onClick={handleLike}
             />
           )}
-          <IoPaperPlaneOutline />
+          <IoPaperPlaneOutline onClick={handlePrompt} />
         </div>
-        <BiBookmark />
+        <BiBookmark onClick={handlePrompt} />
       </div>
 
       <div className="flex flex-col px-4 select-none lg:px-6">

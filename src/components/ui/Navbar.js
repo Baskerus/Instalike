@@ -39,11 +39,11 @@ export default function Navbar({ username }) {
       {username}
       <div className="flex space-x-6 text-2xl">
         <Link to="/upload">
-          <CgAddR className="transition-all duration-200 hover:scale-110 hover:text-neutral-400" />
+          <CgAddR className="transition-all duration-200 hover:scale-110 hover:text-neutral-400 z-[20]" />
         </Link>
         {!settingsOpen ? (
           <RiMenuFill
-            className="z-20 transition-all duration-200 cursor-pointer hover:scale-110 hover:text-slate-500"
+            className="z-[30] transition-all duration-200 cursor-pointer hover:scale-110 hover:text-slate-500"
             onClick={() => setSettingsOpen(!settingsOpen)}
           />
         ) : (
@@ -51,15 +51,15 @@ export default function Navbar({ username }) {
         )}
       </div>
       {settingsOpen && (
-        <Settings top={14}>
+        <Settings>
           <div ref={wrapperRef}>
-            <li className="flex items-center p-4 space-x-2 font-sans h-14 animate-slideInTop hover:bg-slate-100 transition-all duration-200">
+            <li className="flex items-center p-4 space-x-2 font-sans h-14 animate-slideInTop border-l hover:bg-slate-100 transition-all duration-200">
               <IoSettingsOutline />
               <span>Settings</span>
             </li>
             <li
               onClick={logout}
-              className="flex items-center p-4 space-x-2 h-14 animate-slideInTopFast hover:bg-slate-100 transition-all duration-200 z-10"
+              className="flex items-center p-4 space-x-2 h-14 animate-slideInTopFast border-l hover:bg-slate-100 transition-all duration-200 z-10"
             >
               <FiLogOut />
               <span>Log out</span>

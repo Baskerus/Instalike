@@ -31,9 +31,9 @@ export default function SignUpPage() {
 
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen p-4 overflow-hidden bg-slate-50">
-      <div className="flex relative flex-col items-center justify-center w-[90%] max-w-sm animate-slideInLeft ease">
+      <div className="flex relative flex-col items-center justify-center w-[90%] max-w-sm animate-slideInTop animate-fadeIn ease text-sm">
         <h1 className="mb-4 text-5xl font-logofont">Instalike</h1>
-        <form className="flex flex-col items-center justify-center w-full space-y-4 ">
+        <form className="flex flex-col items-center justify-center w-full space-y-4">
           <input
             className="w-full h-10 max-w-sm px-2 border rounded-md bg-slate-100"
             type="email"
@@ -64,7 +64,7 @@ export default function SignUpPage() {
           <span className="w-full ">
             <button
               type="submit"
-              className="flex items-center justify-center w-full h-10 max-w-sm mt-6 text-white bg-blue-500 rounded-md shadow-md"
+              className="flex items-center justify-center w-full h-10 max-w-sm mt-6 text-white bg-blue-500  rounded-md shadow-md hover:bg-blue-400 transition-all duration-200"
               onClick={handleSignUp}
             >
               Sign Up

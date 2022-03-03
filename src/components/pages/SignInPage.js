@@ -42,7 +42,7 @@ export default function SignInPage() {
 
   return (
     <div className="fixed z-10 flex flex-col items-center justify-center w-screen h-screen px-5 bg-slate-50">
-      <div className="flex flex-col items-center justify-center w-[90%] max-w-96 animate-slideInRight">
+      <div className="flex flex-col items-center justify-center w-[90%] max-w-96">
         <h1 className="mb-4 text-5xl transition-all duration-300 font-logofont">
           Instalike
         </h1>
@@ -77,7 +77,7 @@ export default function SignInPage() {
             <button
               to="/feed"
               type="submit"
-              className="flex items-center justify-center w-full h-10 max-w-sm text-white bg-blue-500 rounded-md shadow-md"
+              className="flex items-center justify-center w-full h-10 max-w-sm text-white bg-blue-500 rounded-md shadow-md hover:bg-blue-400 transition-all duration-200"
               onClick={handleSignInButton}
             >
               Sign in
