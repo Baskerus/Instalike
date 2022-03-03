@@ -68,7 +68,7 @@ export default function Feed({ avatarsArray }) {
                 />
               );
             })}
-          <span className="pt-16 flex items-center justify-center w-full text-sm text-slate-400">
+          <span className="pt-16 flex items-center justify-center w-full text-sm text-slate-400 select-none">
             You've reached the end.
           </span>
         </div>

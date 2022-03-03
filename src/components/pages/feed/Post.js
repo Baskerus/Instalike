@@ -126,7 +126,7 @@ export default function Post({
 
   return (
     <div className="relative flex flex-col w-full pb-16 my-6 text-sm transition-none duration-200 border rounded-md shadow-md bg-slate-50 shadow-slate-100">
-      <div className="flex items-center justify-between w-full p-4 lg:p-6">
+      <div className="flex items-center justify-between w-full p-4 lg:p-6 z-[20]">
         <div className="flex items-center justify-center space-x-2">
           <div className="z-10 flex w-8 h-8 overflow-hidden border rounded-full cursor-pointer">
             {usersAvatar ? (
@@ -143,17 +143,22 @@ export default function Post({
           </div>
           <span className="font-bold lowercase">{username}</span>
         </div>
-        <div>
-          {!postSettingsOpen && (
+        <div ref={wrapperRef}>
+          {!postSettingsOpen ? (
             <BsThreeDotsVertical
-              className="w-8 h-8 p-[.3rem] cursor-pointer hover:scale-150 hover:text-neutral-400 transition-all duration-300"
+              className="w-8 h-8 p-[.3rem] cursor-pointer  duration-300"
               onClick={openPostSettings}
+            />
+          ) : (
+            <BsThreeDotsVertical
+              onClick={openPostSettings}
+              className="w-8 h-8 p-[.3rem] cursor-pointer transition-all duration-300"
             />
           )}
 
           {postSettingsOpen && (
-            <Settings>
-              <div ref={wrapperRef}>
+            <Settings borderL={0}>
+              <div className="pt-6">
                 <li className="flex items-center p-4 space-x-2 font-sans h-14 animate-slideInTop hover:bg-slate-100">
                   <MdReportGmailerrorred className="text-2xl" />
                   <span>Report</span>
@@ -181,8 +186,8 @@ export default function Post({
         )}
       </div>
 
-      <div className="flex items-center justify-between w-full px-4 py-3 text-2xl lg:px-6">
-        <div className="flex space-x-6">
+      <div className="flex items-center justify-between w-full  px-4 py-3 text-2xl lg:px-6">
+        <div className="flex space-x-6 ">
           {postLiked ? (
             <div
               onClick={handleLike}
@@ -202,7 +207,10 @@ export default function Post({
       </div>
 
       <div className="flex flex-col px-4 select-none lg:px-6">
-        <div onClick={handleViewLikes} className="font-bold cursor-pointer">
+        <div
+          onClick={handleViewLikes}
+          className="font-bold cursor-pointer w-16"
+        >
           {postLikes !== 0 ? postLikes : "No"}{" "}
           {postLikes === 1 ? "like" : "likes"}
         </div>

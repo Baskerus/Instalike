@@ -48,6 +48,9 @@ module.exports = {
       transitionTimingFunction: {
         smooth: "cubic-bezier(.96,.06,1,-0.12)",
       },
+      screens: {
+        "hover-hover": { raw: "(hover: hover)" },
+      },
     },
   },
   plugins: [],

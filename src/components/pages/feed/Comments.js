@@ -23,19 +23,22 @@ function Comments({ id, comments }) {
       setShowError(true);
       return;
     }
-    setCommentsArray([
-      ...commentsArray,
-      { user: currentUser, content: commentContent },
-    ]);
-    await db
-      .collection("posts")
-      .doc(id)
-      .update({
-        comments: [
-          ...commentsArray,
-          { user: currentUser, content: commentContent },
-        ],
-      });
+    if (textarea.current.value) {
+      setCommentsArray([
+        ...commentsArray,
+        { user: currentUser, content: commentContent },
+      ]);
+      await db
+        .collection("posts")
+        .doc(id)
+        .update({
+          comments: [
+            ...commentsArray,
+            { user: currentUser, content: commentContent },
+          ],
+        });
+    }
+
     textarea.current.value = "";
   }
 

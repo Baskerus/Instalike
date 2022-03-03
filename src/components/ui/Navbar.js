@@ -34,30 +34,32 @@ export default function Navbar({ username }) {
   }
 
   return (
-    <nav className="navbar fixed flex top-0 w-full max-w-2xl px-3 py-2 justify-between items-center border rounded-b-md bg-slate-50 z-[20] select-none">
+    <nav className="navbar fixed flex top-0 w-full max-w-2xl px-3 py-2 justify-between items-center border rounded-b-md bg-slate-50 z-[30] select-none">
       <span className="text-4xl font-logofont">Instalike</span>
       {username}
       <div className="flex space-x-6 text-2xl">
         <Link to="/upload">
-          <CgAddR className="transition-all duration-200 hover:scale-125 hover:text-neutral-400" />
+          <CgAddR className="transition-all duration-200 hover:scale-110 hover:text-neutral-400" />
         </Link>
-        <RiMenuFill
-          className={`z-20 transition-all duration-200 cursor-pointer hover:scale-125 hover:text-neutral-400 ${
-            settingsOpen && "opacity-0 z-0"
-          }`}
-          onClick={() => setSettingsOpen(!settingsOpen)}
-        />
+        {!settingsOpen ? (
+          <RiMenuFill
+            className="z-20 transition-all duration-200 cursor-pointer hover:scale-110 hover:text-slate-500"
+            onClick={() => setSettingsOpen(!settingsOpen)}
+          />
+        ) : (
+          <RiMenuFill className="transition-all duration-200 cursor-pointer hover:scale-110 hover:text-slate-500 opacity-0 z-0 pointer-events-none" />
+        )}
       </div>
       {settingsOpen && (
-        <Settings>
+        <Settings top={14}>
           <div ref={wrapperRef}>
-            <li className="flex items-center p-4 space-x-2 font-sans h-14 animate-slideInTop hover:bg-slate-100">
+            <li className="flex items-center p-4 space-x-2 font-sans h-14 animate-slideInTop hover:bg-slate-100 transition-all duration-200">
               <IoSettingsOutline />
               <span>Settings</span>
             </li>
             <li
               onClick={logout}
-              className="flex items-center p-4 space-x-2 h-14 animate-slideInTopFast hover:bg-slate-100"
+              className="flex items-center p-4 space-x-2 h-14 animate-slideInTopFast hover:bg-slate-100 transition-all duration-200 z-10"
             >
               <FiLogOut />
               <span>Log out</span>

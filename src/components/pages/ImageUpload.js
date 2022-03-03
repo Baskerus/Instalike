@@ -56,7 +56,7 @@ export default function ImageUpload() {
   };
   return (
     <div className="fixed top-0 flex flex-col items-center justify-center w-full h-full p-4 bg-slate-100  animate-fadeIn">
-      <div className="flex flex-col relative min-w-[240px] max-w-md w-full h-[470px] items-center justify-center bg-slate-50 rounded-xl space-y-2  shadow-xl">
+      <div className="flex flex-col p-6 relative min-w-[240px] max-w-md w-full h-[470px] items-center justify-center bg-slate-50 rounded-xl space-y-2  shadow-xl">
         <MdClose
           onClick={() => navigate("/feed")}
           className="absolute top-0 right-0 w-10 h-10 p-2 m-2 cursor-pointer text-slate-500"
@@ -66,13 +66,13 @@ export default function ImageUpload() {
         </div>
         <IoMdImages className="text-[100px] text-slate-300" />
         <textarea
-          className="h-16 max-w-xs w-[80%] p-3 text-sm resize-none focus:outline-slate-300 rounded-md border"
+          className="h-16 max-w-xs w-full p-3 text-sm resize-none focus:outline-slate-300 rounded-md border"
           maxLength={80}
           placeholder="Enter image caption..."
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
         {!image && (
-          <label className="flex items-center justify-center max-w-xs w-full h-10 text-sm text-white bg-blue-500 rounded-md shadow-md cursor-pointer">
+          <label className="flex items-center justify-center w-full max-w-xs h-10 text-sm text-white bg-blue-500 rounded-md shadow-md cursor-pointer">
             Select an image
             <input
               className="hidden border"
@@ -84,7 +84,7 @@ export default function ImageUpload() {
 
         {image && (
           <div className="flex flex-col items-center justify-center w-full  animate-fadeIn">
-            <label className="flex items-center justify-center max-w-xs w-full h-10 text-sm border bg-white focus:border-blue-500 text-blue-500 rounded-md shadow-md cursor-pointer overflow-hidden truncate">
+            <label className="flex items-center justify-center max-w-xs w-full h-10 text-sm border bg-white focus:border-blue-500 text-neutral-400 rounded-md shadow-md cursor-pointer overflow-hidden truncate">
               <span className="flex items-center justify-center w-full p-4">
                 {image.name}
               </span>
