@@ -47,11 +47,11 @@ function PostTime({ timestamp }) {
         setPostTime();
         setTime(Date.now());
       };
-    } 
-      return () => {
-        clearInterval(interval);
-      };
-  }, [time, timestamp]);
+    }
+    return () => {
+      clearInterval(interval);
+    };
+  }, [timestamp]);
 
   return <div className="text-xs text-neutral-400">{postTime}</div>;
 }

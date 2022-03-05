@@ -4,13 +4,20 @@ import { db } from "../../../firebase";
 import firebase from "firebase/compat/app";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../ui/Loader";
+import InfiniteScroll from "react-infinite-scroller";
 
 export default function Feed({ avatarsArray }) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [postsToShow, setPostsToShow] = useState(0);
+  const [expand, setExpand] = useState(false);
 
   let user = firebase.auth().currentUser;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    expandFeed();
+  }, [expand]);
 
   useEffect(() => {
     // Returns to sign in page if the user is not signed in
@@ -42,6 +49,18 @@ export default function Feed({ avatarsArray }) {
     };
   }, [user, navigate]);
 
+  function expandFeed() {
+    if (postsToShow > posts.length) {
+      return;
+    } else {
+      setPostsToShow(postsToShow + 1);
+    }
+  }
+
+  function compareTimes(a, b) {
+    return b.post.timestamp - a.post.timestamp;
+  }
+
   return (
     <>
       {loading ? (
@@ -49,27 +68,37 @@ export default function Feed({ avatarsArray }) {
           <Loader />
         </div>
       ) : (
-        <div className="w-full max-w-2xl pb-32 mt-14 space-y-6 overflow-hidden md:space-y-10 lg:space-y-16">
-          {user &&
-            posts.map(({ post, id }) => {
-              return (
-                <Post
-                  key={id}
-                  id={id}
-                  username={post.username}
-                  avatar={post.avatar}
-                  image={post.imageUrl}
-                  description={post.description}
-                  likes={post.likes}
-                  timestamp={post.timestamp}
-                  likedBy={post.likedBy}
-                  comments={post.comments}
-                  avatarsArray={avatarsArray}
-                />
-              );
-            })}
-          <span className="pt-16 flex items-center justify-center w-full text-sm text-slate-400 select-none">
-            You've reached the end.
+        <div className="w-full max-w-2xl pb-32 space-y-6 overflow-hidden it mt-14 md:space-y-10 lg:space-y-16">
+          <InfiniteScroll
+            pageStart={1}
+            loadMore={expandFeed}
+            hasMore={true || false}
+            threshold={0}
+          >
+            {user &&
+              posts
+                .sort(compareTimes)
+                .slice(0, postsToShow)
+                .map(({ post, id }) => {
+                  return (
+                    <Post
+                      key={id}
+                      id={id}
+                      username={post.username}
+                      avatar={post.avatar}
+                      image={post.imageUrl}
+                      description={post.description}
+                      likes={post.likes}
+                      timestamp={post.timestamp}
+                      likedBy={post.likedBy}
+                      comments={post.comments}
+                      avatarsArray={avatarsArray}
+                    />
+                  );
+                })}
+          </InfiniteScroll>
+          <span className="flex items-center justify-center w-full pt-16 text-sm select-none text-slate-400">
+            No more posts.
           </span>
         </div>
       )}
